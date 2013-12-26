@@ -1,4 +1,0 @@
-acronym
-=======
-
-LaTeX Acronym Package
