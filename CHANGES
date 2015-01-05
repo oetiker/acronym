@@ -1,3 +1,15 @@
+Version 1.40 (Sept 2014)
+
+remove \hskip\z@ instances, since they cause bad formating
+since space at the end of a line can not be collapsed anymore
+-- Hartmut Henkel
+
+Version 1.39 (Aug 2014)
+
+make the appearance of labels consistent whether or not the acronym environment
+has its optional argument provided
+-- Yann Leprince
+
 Version 1.38 (Oct 2012)
 
 add support for dynamic indefinite articles depending on the acronym form used

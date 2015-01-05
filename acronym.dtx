@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1066}
+% \CheckSum{1062}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -83,6 +83,8 @@
 % \DoNotIndex{\usepackage}
 %
 %
+%  \changes{v1.40}{2014/09/29}{Hartmut Henkel - remove \cmd{hskip} instances, since they cause bad formating since space at the end of a line can not be collapsed anymore}
+%  \changes{v1.39}{2014/08/14}{Yann Leprince - make the appearance of labels consistent whether or not the acronym environment has its optional argument provided}
 %  \changes{v1.38}{2012/10/09}{Ash Hughes - add support for dynamic indefinite articles depending on the acronym form used}
 %  \changes{v1.37}{2012/09/04}{Martin Falk - ac* should NOT set the used flag ... now it does not. Martin Ruessler found fix for non hyphenation in the first word of the long form of the acronym}
 %  \changes{v1.36}{2010/09/08}{Uwe Bieling disable hyperlinks in nolist mode, prevent hyphenation of short form of acronyms}
@@ -360,6 +362,15 @@
 %    |\begin{acronym}[HBCI]|
 %    \end{quote}
 %
+%    \DescribeMacro{\aclabelfont}
+%    The short form of each acronym in the list is formatted using
+%    \cmd{\aclabelfont}, which typesets its arguments in bold font by
+%    default. It can be redefined to produce bold sans-serif labels, for
+%    example, with
+%    \begin{quote}
+%      |\renewcommand*{\aclabelfont}[1]{\textbf{\textsf{\acsfont{#1}}}}|
+%    \end{quote}
+%
 %    In standard mode, the acronym-list will consist of all defined
 %    acronyms, regardless if the the acronym was used in the text
 %    before or not. This behavior can be changed by loading the
@@ -609,8 +620,8 @@ blocks to be tested separately. The latter are commonly indicated as
 %    First we test that we got the right format and name the package.
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesPackage{acronym}[2012/10/29
-                          v1.38
+\ProvidesPackage{acronym}[2014/09/29
+                          v1.40
                           Support for acronyms (Tobias Oetiker)]
 \RequirePackage{suffix,xstring}
 %    \end{macrocode}
@@ -975,15 +986,16 @@ blocks to be tested separately. The latter are commonly indicated as
 %    longest appearing acronym as parameter. If the option 'nolist' is selected
 %    the enviroment is empty.
 %    \begin{macrocode}
-\def\bflabel#1{{\textbf{\textsf{#1}}\hfill}}
+\newcommand*{\aclabelfont}[1]{\textbf{\acsfont{#1}}}
+\def\AC@makelabel#1{#1\hfil}
 \newenvironment{AC@deflist}[1]%
         {\ifAC@nolist%
          \else%
             \raggedright\begin{list}{}%
-                {\settowidth{\labelwidth}{\textbf{\textsf{#1}}}%
+                {\settowidth{\labelwidth}{\AC@makelabel{\aclabelfont{#1}}}%
                 \setlength{\leftmargin}{\labelwidth}%
                 \addtolength{\leftmargin}{\labelsep}%
-                \renewcommand{\makelabel}{\bflabel}}%
+                \renewcommand{\makelabel}{\AC@makelabel}}%
           \fi}%
         {\ifAC@nolist%
          \else%
@@ -1065,7 +1077,7 @@ blocks to be tested separately. The latter are commonly indicated as
   \else%
   \ifAC@printonlyused%
     \expandafter\ifx\csname acused@#1\endcsname\AC@used%
-       \item[\protect\AC@hypertarget{#1}{\acsfont{#2}}] #3%
+       \item[\protect\AC@hypertarget{#1}{\aclabelfont{#2}}] #3%
           \ifAC@withpage%
             \expandafter\ifx\csname r@acro:#1\endcsname\relax%
                \PackageInfo{acronym}{%
@@ -1077,7 +1089,7 @@ blocks to be tested separately. The latter are commonly indicated as
           \fi%
     \fi%
  \else%
-    \item[\protect\AC@hypertarget{#1}{\acsfont{#2}}] #3%
+    \item[\protect\AC@hypertarget{#1}{\aclabelfont{#2}}] #3%
  \fi%
  \fi%
  \begingroup
@@ -1388,9 +1400,7 @@ blocks to be tested separately. The latter are commonly indicated as
     \@testdef{#1}{#2}{#3}%
   }%
 }%
-\protected@write\@auxout{}{%
-  \string\reset@newl@bel
-}%
+\AtBeginDocument{\immediate\write\@auxout{\string\reset@newl@bel}}
 \newcommand*\reset@newl@bel{%
   \ifx\@newl@bel\@testdef
     \let\@newl@bel\ac@testdef
@@ -1436,10 +1446,10 @@ blocks to be tested separately. The latter are commonly indicated as
 \newcommand*{\@acf}[1]{%
     \ifAC@footnote
        \acsfont{\AC@acs{#1}}%
-       \footnote{\AC@placelabel{#1}\hskip\z@\AC@acl{#1}{}}%
+       \footnote{\AC@placelabel{#1}\AC@acl{#1}{}}%
     \else
        \acffont{%
-          \AC@placelabel{#1}\hskip\z@\AC@acl{#1}%
+          \AC@placelabel{#1}\AC@acl{#1}%
           \nolinebreak[3] %
           \acfsfont{(\acsfont{\AC@acs{#1}})}%
         }%
@@ -1588,10 +1598,10 @@ blocks to be tested separately. The latter are commonly indicated as
 \newcommand*{\@acfp}[1]{%
    \ifAC@footnote
       \acsfont{\AC@acsp{#1}}%
-      \footnote{\AC@placelabel{#1}\hskip\z@\AC@aclp{#1}{}}%
+      \footnote{\AC@placelabel{#1}\AC@aclp{#1}{}}%
    \else
       \acffont{%
-         \AC@placelabel{#1}\hskip\z@\AC@aclp{#1}%
+         \AC@placelabel{#1}\AC@aclp{#1}%
          \nolinebreak[3] %
          \acfsfont{(\acsfont{\AC@acsp{#1}})}%
          }%
