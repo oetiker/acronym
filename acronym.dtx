@@ -2,7 +2,7 @@
 %
 % Doc-Source file to use with LaTeX2e
 %
-% Copyright 1994-2010 by Tobias Oetiker (tobi@oetiker.ch) and many Contributors.
+% Copyright 1994-2015 by Tobias Oetiker (tobi@oetiker.ch) and many Contributors.
 % All rights reserved.
 %
 % This work may be distributed and/or modified under the conditions of
@@ -83,6 +83,7 @@
 % \DoNotIndex{\usepackage}
 %
 %
+%  \changes{v1.41}{2015/03/21}{Tobi Oetiker and Jason Mills \cmd{hskip} fix nameing conflicts with pageslts package}
 %  \changes{v1.40}{2014/09/29}{Hartmut Henkel - remove \cmd{hskip} instances, since they cause bad formating since space at the end of a line can not be collapsed anymore}
 %  \changes{v1.39}{2014/08/14}{Yann Leprince - make the appearance of labels consistent whether or not the acronym environment has its optional argument provided}
 %  \changes{v1.38}{2012/10/09}{Ash Hughes - add support for dynamic indefinite articles depending on the acronym form used}
@@ -854,14 +855,14 @@ blocks to be tested separately. The latter are commonly indicated as
 %
 %    \begin{macro}{\acresetall}
 %    \begin{macro}{\AC@reset}
-%    This macro resets the |ac@FN| - tag of each acronym, therefore |\ac|
+%    This macro resets the |AC@FN| - tag of each acronym, therefore |\ac|
 %    will use FullName (FN) next time it is called
 %    \begin{macrocode}
 \newcommand*\acresetall{\the\AC@clearlist\AC@clearlist={}}
 %    \end{macrocode}
 %    \begin{macrocode}
 \def\AC@reset#1{%
-  \global\expandafter\let\csname ac@#1\endcsname\relax
+  \global\expandafter\let\csname AC@#1\endcsname\relax
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -1035,7 +1036,7 @@ blocks to be tested separately. The latter are commonly indicated as
    \long\def\acroextra##1{##1}%
    \def\@tempa{1}\def\@tempb{#1}%
    \ifx\@tempa\@tempb%
-      \global\expandafter\let\csname ac@des@mark\endcsname\AC@used%
+      \global\expandafter\let\csname AC@des@mark\endcsname\AC@used%
       \ifAC@nolist%
       \else%
          \begin{description}%
@@ -1051,7 +1052,7 @@ blocks to be tested separately. The latter are commonly indicated as
           \item[]\relax%
       \fi%
    \fi%
-   \expandafter\ifx\csname ac@des@mark\endcsname\AC@used%
+   \expandafter\ifx\csname AC@des@mark\endcsname\AC@used%
       \ifAC@nolist%
       \else%
         \end{description}%
@@ -1343,13 +1344,13 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \begin{macrocode}
 \newcommand*\@verridelabel[1]{%
   \@bsphack
-  \protected@write\@auxout{}{\string\undonewlabel{#1}}%
+  \protected@write\@auxout{}{\string\AC@undonewlabel{#1}}%
   \label{#1}%
-  \@overriddenmessage rs{#1}%
+  \AC@overriddenmessage rs{#1}%
   \@esphack
 }%
-\newcommand*\undonewlabel{\@und@newl@bel rs}%
-\newcommand*\@und@newl@bel[3]{%
+\newcommand*\AC@undonewlabel{\AC@und@newl@bel rs}%
+\newcommand*\AC@und@newl@bel[3]{%
   \@ifundefined{#1@#3}%
   {%
     \global\expandafter\let\csname#2@#3\endcsname\@nnil
@@ -1358,7 +1359,7 @@ blocks to be tested separately. The latter are commonly indicated as
     \global\expandafter\let\csname#1@#3\endcsname\relax
   }%
 }%
-\newcommand*\@overriddenmessage[3]{%
+\newcommand*\AC@overriddenmessage[3]{%
   \expandafter\ifx\csname#2@#3\endcsname\@nnil
     \expandafter\@firstoftwo
   \else
@@ -1382,7 +1383,7 @@ blocks to be tested separately. The latter are commonly indicated as
     \expandafter\g@addto@macro\csname#2@#3\endcsname{i}%
   }%
 }%
-\newcommand*\ac@testdef[3]{%
+\newcommand*\AC@testdef[3]{%
   \@ifundefined{s@#2}\@secondoftwo\@firstofone
   {%
     \expandafter\ifx\csname s@#2\endcsname\empty
@@ -1400,19 +1401,19 @@ blocks to be tested separately. The latter are commonly indicated as
     \@testdef{#1}{#2}{#3}%
   }%
 }%
-\AtBeginDocument{\immediate\write\@auxout{\string\reset@newl@bel}}
-\newcommand*\reset@newl@bel{%
+\AtBeginDocument{\immediate\write\@auxout{\string\AC@reset@newl@bel}}
+\newcommand*\AC@reset@newl@bel{%
   \ifx\@newl@bel\@testdef
-    \let\@newl@bel\ac@testdef
-    \let\undonewlabel\@gobble
+    \let\@newl@bel\AC@testdef
+    \let\AC@undonewlabel\@gobble
   \fi
 }%
 \newcommand*\AC@placelabel[1]{%
-  \expandafter\ifx\csname ac@#1\endcsname\AC@used
+  \expandafter\ifx\csname AC@#1\endcsname\AC@used
   \else
     {\AC@phantomsection\@verridelabel{acro:#1}}%
     \ifAC@starred\else%
-    \global\expandafter\let\csname ac@#1\endcsname\AC@used
+    \global\expandafter\let\csname AC@#1\endcsname\AC@used
     \fi%
     \AC@addtoAC@clearlist{#1}%
   \fi
@@ -1429,7 +1430,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \cmd{\acfsfont}, and on the option |footnote| handled below.
 %    The acronym is added to the clear list to keep track of the
 %    used acronyms and it is marked as used by by |\gdef|ining
-%    the |\ac@FN| to be |\AC@used| after its first use.
+%    the |\AC@FN| to be |\AC@used| after its first use.
 %
 %    The option |footnote| leads to a redefinition of \cmd{\acf},
 %    making the full name appear as a footnote. There is then
@@ -1473,7 +1474,7 @@ blocks to be tested separately. The latter are commonly indicated as
   \ifAC@dua
      \ifAC@starred\acl*{#1}\else\acl{#1}\fi%
   \else
-     \expandafter\ifx\csname ac@#1\endcsname\AC@used%
+     \expandafter\ifx\csname AC@#1\endcsname\AC@used%
      \ifAC@starred\acs*{#1}\else\acs{#1}\fi%
    \else
      \ifAC@starred\acf*{#1}\else\acf{#1}\fi%
@@ -1511,7 +1512,7 @@ blocks to be tested separately. The latter are commonly indicated as
      \ifAC@dua
         \csname fn@#1@IL\endcsname%
      \else
-        \expandafter\ifx\csname ac@#1\endcsname\AC@used%
+        \expandafter\ifx\csname AC@#1\endcsname\AC@used%
         \csname fn@#1@IS\endcsname%
       \else
         \csname fn@#1@IL\endcsname%
@@ -1625,7 +1626,7 @@ blocks to be tested separately. The latter are commonly indicated as
   \ifAC@dua
      \ifAC@starred\aclp*{#1}\else\aclp{#1}\fi%
   \else
-   \expandafter\ifx\csname ac@#1\endcsname\AC@used
+   \expandafter\ifx\csname AC@#1\endcsname\AC@used
       \ifAC@starred\acsp*{#1}\else\acsp{#1}\fi%
    \else
       \ifAC@starred\acfp*{#1}\else\acfp{#1}\fi%
@@ -1655,7 +1656,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \cmd{\acronymused}!
 %    \begin{macrocode}
 \newcommand{\acused}[1]{%
-\global\expandafter\let\csname ac@#1\endcsname\AC@used%
+\global\expandafter\let\csname AC@#1\endcsname\AC@used%
 \AC@addtoAC@clearlist{#1}}
 %    \end{macrocode}
 %    \end{macro}
