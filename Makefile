@@ -1,5 +1,5 @@
 SHELL = /bin/sh
-VERS = 1.40
+VERS = 1.41
 PACK=acronym
 
 tar:	tds
