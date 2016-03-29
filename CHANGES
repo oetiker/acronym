@@ -1,3 +1,5 @@
+fix double space and missing used flag with acfi -- Horst Schirmeier
+
 Version 1.41 (Mar 2015)
 
 change names of internal macros to avoid nameing conflics with pageslts
