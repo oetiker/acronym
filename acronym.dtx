@@ -83,6 +83,7 @@
 % \DoNotIndex{\usepackage}
 %
 %
+%  \changes{v1.42}{2018/05/02}{Philippe Chauvat \cmd{hskip} Fix the carriage return with long lines (line 234/235)}
 %  \changes{v1.41}{2015/03/21}{Tobi Oetiker and Jason Mills \cmd{hskip} fix nameing conflicts with pageslts package}
 %  \changes{v1.40}{2014/09/29}{Hartmut Henkel - remove \cmd{hskip} instances, since they cause bad formating since space at the end of a line can not be collapsed anymore}
 %  \changes{v1.39}{2014/08/14}{Yann Leprince - make the appearance of labels consistent whether or not the acronym environment has its optional argument provided}
@@ -1086,8 +1087,8 @@ blocks to be tested separately. The latter are commonly indicated as
                  full in text}%
             \else%
                \dotfill\pageref{acro:#1}%
-            \fi\\%
-          \fi%
+            \fi%
+          \fi\\%
     \fi%
  \else%
     \item[\protect\AC@hypertarget{#1}{\aclabelfont{#2}}] #3%
