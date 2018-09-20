@@ -181,7 +181,7 @@
 %    \DescribeMacro{\ac}
 %    To enter an acronym inside the text, use the
 %    \begin{quote}
-%     |\ac{|\meta{acronym}|}|
+%     |\ac[|\meta{linebreak penalty}|]{|\meta{acronym}|}|
 %    \end{quote}
 %    command. The first time you use an acronym, the full name of the
 %    acronym along with the acronym in brackets will be printed. If you
@@ -189,6 +189,18 @@
 %    name of the acronym is printed as a footnote.
 %    The next time you access the acronym only the acronym will
 %    be printed.
+%
+%    When an acronym is being used, for the first time (with the |footnote|
+%    option not specified), next to the end of the line, a line break between
+%    the full name of the acronym and the acronym in brackets can be
+%    encountered. The optional variable represents the penalty level of
+%    breaking the line at that place, taking integer values between 0 and 4.
+%    A higher number corresponds to a higher penalty.
+%
+%    \DescribeMacro{\Ac}
+%    Works in the same way as \cmd{\ac}, but starts the long form with an
+%    upper case letter. Use case: when the acronym is used for the first
+%    time, at the beginning of a sentence.
 %
 %    \DescribeMacro{\acresetall}
 %    The 'memory' of the macro \cmd{\ac} can be flushed by calling the macro
@@ -199,11 +211,20 @@
 %    If later in the text again the Full Name of the acronym should be
 %    printed, use the command
 %    \begin{quote}
-%     |\acf{|\meta{acronym}|}|
+%     |\acf[|\meta{linebreak penalty}|]{|\meta{acronym}|}|
 %    \end{quote}
 %    to access the acronym. It stands for ``full acronym'' and it
-%    always prints the full name
-%    and the acronym in brackets.
+%    always prints the full name and the acronym in brackets.
+%
+%    When an full acronym is being used next to the end of the line, a line
+%    break between the full name of the acronym and the acronym in brackets
+%    can be encountered. The optional variable represents the penalty level
+%    of breaking the line at that place, taking integer values between 0
+%    and 4. A higher number corresponds to a higher penalty.
+%
+%    \DescribeMacro{\Acf}
+%    Works in the same way as \cmd{\acf}, but starts the long form with an
+%    upper case letter.
 %
 %    \DescribeMacro{\acs}
 %    To get the short version of the acronym, use the command
@@ -218,13 +239,25 @@
 %     |\acl{|\meta{acronym}|}|
 %    \end{quote}
 %
+%    \DescribeMacro{\Acl}
+%    Works in the same way as \cmd{\acl}, but starts with an upper case
+%    letter.
+%
 %    \DescribeMacro{\acp}
 %    Works in the same way as \cmd{\ac}, but makes the short and/or
-%    long forms into plurals. 
+%    long forms into plurals.
+%
+%    \DescribeMacro{\Acp}
+%    Works in the same way as \cmd{\acp}, but starts the long form with an
+%    upper case letter.
 %
 %    \DescribeMacro{\acfp}
 %    Works in the same way as \cmd{\acf}, but makes the short and
-%    long forms into plurals. 
+%    long forms into plurals.
+%
+%    \DescribeMacro{\Acfp}
+%    Works in the same way as \cmd{\acfp}, but starts the long form with an
+%    upper case letter.
 %
 %    \DescribeMacro{\acsp}
 %    Works in the same way as \cmd{\acs}, but makes the short
@@ -234,9 +267,18 @@
 %    Works in the same way as \cmd{\acl}, but makes the long form
 %    into a plural.
 %
+%    \DescribeMacro{\Aclp}
+%    Works in the same way as \cmd{\aclp}, but starts with an upper case
+%    letter.
+%
 %    \DescribeMacro{\acfi}
-%    Prints the Full Name acronym (\cmd{\acl}) in italics and the abbreviated
-%    form (\cmd{\acs}) in upshaped form.
+%    Works in the same way as \cmd{\acf}, but prints the Full Name acronym
+%    (\cmd{\acl}) in italics and the abbreviated form (\cmd{\acs}) in
+%    upshaped form.
+%
+%    \DescribeMacro{\Acfi}
+%    Works in the same way as \cmd{\acfi}, but starts the long form with an
+%    upper case letter.
 %
 %    \DescribeMacro{\acused}
 %    Marks an acronym as used, as if it had been called with \cmd{\ac},
@@ -248,6 +290,10 @@
 %
 %    \DescribeMacro{\aclu}
 %    Prints the long form of the acronym and marks it as used.
+%
+%    \DescribeMacro{\Aclu}
+%    Works in the same way as \cmd{\aclu}, but starts with an upper case
+%    letter.
 %
 %    Example: |\acl{lox}/\acl{lh2} (\acsu{lox}/\acsu{lh2})|
 %
@@ -264,9 +310,10 @@
 %    that the acronym will not be marked as used.  If you work with the 'onlyused'
 %    option then macros which have only been used with starred commands will
 %    not show up.\\
-%    \cmd{\ac*}, \cmd{\acs*}, \cmd{\acl*}, \cmd{\acf*}, \cmd{\acp*},
-%    \cmd{\acsp*}, \cmd{\aclp*}, \cmd{\acfp*}, \cmd{\acfi*}, \cmd{\acsu*},
-%    \cmd{\aclu*}, \cmd{\iac*} and \cmd{\Iac*}.
+%    \cmd{\ac*}, \cmd{\Ac*}, \cmd{\acs*}, \cmd{\acl*}, \cmd{\Acl*}, \cmd{\acf*},
+%    \cmd{\Acf*}, \cmd{\acp*}, \cmd{\Acp*}, \cmd{\acsp*}, \cmd{\aclp*}, \cmd{\Aclp*},
+%    \cmd{\acfp*}, \cmd{\Acfp*}, \cmd{\acfi*}, \cmd{\Acfi*}, \cmd{\acsu*},
+%    \cmd{\aclu*}, \cmd{\Aclu*}, \cmd{\iac*} and \cmd{\Iac*}.
 %
 % \subsection{Customization}
 %
@@ -288,7 +335,7 @@
 %    handles the output of \cmd{\acf}, where the included acronym
 %    goes through \DescribeMacro{\acfsfont}\cmd{\acfsfont} (and
 %    \cmd{\acsfont}).
-%    The plural forms are treated accordingly. Usually the
+%    The plural and upper case forms are treated accordingly. Usually the
 %    three macros do nothing. To give an example, the option |smaller|
 %    makes \cmd{\acsfont} use the command \cmd{\textsmaller} from the
 %    |relsize| package:
@@ -497,7 +544,7 @@
 %    but please note the following:
 %    \begin{itemize}
 %       \item  Do not use the general form (\cmd{\ac} or \cmd{\acp}) in
-%              sectional headers, because it will the uses the full name the first time,
+%              sectional headers, because it will uses the full name the first time,
 %              that is in the table of contents, and the short form further on.
 %
 %       \item  The text of \meta{acronym} is used verbatim in bookmarks and
@@ -510,7 +557,7 @@
 %             for example:
 %             \begin{quote}
 %                |\acro{Nx}[\ensuremath{N_{\chi}}]|\\
-%                |     {\texorpdfstring{$\chi$}{X}-faktor}|
+%                |     {\texorpdfstring{$\chi$}{X}-factor}|
 %             \end{quote}
 %             which will then give
 %             \begin{quote}\begin{tabbing}
@@ -578,6 +625,10 @@ between the constant of Boltzmann and the \acl{NA}:
 
 \acl{lox}/\acl{lh2} (\acsu{lox}/\acsu{lh2})
 
+\Acp{LFVP} are processes in which the lepton number of the initial
+and final states are different. An example for \iac{LFVP} is
+neutrinoless double beta decay.
+
 \subsection{Some testing fundamentals}
 When testing \acp{IC}, one typically wants to identify functional
 blocks to be tested separately. The latter are commonly indicated as
@@ -590,6 +641,8 @@ blocks to be tested separately. The latter are commonly indicated as
  \acro{NA}[\ensuremath{N_{\mathrm A}}]
       {Number of Avogadro\acroextra{ (see \S\ref{Chem})}}
  \acro{NAD+}[NAD\textsuperscript{+}]{Nicotinamide Adenine Dinucleotide}
+ \acro{LFVP}{lepton flavor violating process}
+ \acroindefinite{LFVP}{an}{a}
  \acro{NUA}{Not Used Acronym}
  \acro{TDMA}{Time Division Multiple Access}
  \acro{UA}{Used Acronym}
@@ -633,8 +686,9 @@ blocks to be tested separately. The latter are commonly indicated as
 % \subsection{Options}
 %
 %    \begin{macro}{\ifAC@footnote}
-%    The option |footnote| leads to a redefinition of \cmd{\acf} and
-%    \cmd{\acfp}, making the full name appear as a footnote.
+%    The option |footnote| leads to a redefinition of \cmd{\acf},
+%    \cmd{\Acf}, \cmd{\acfp}, and \cmd{\Acfp}, making the full name appear
+%    as a footnote.
 %    \begin{macrocode}
 \newif\ifAC@footnote
 \AC@footnotefalse
@@ -696,10 +750,10 @@ blocks to be tested separately. The latter are commonly indicated as
 %
 %    \begin{macro}{\ifAC@dua}
 %    The option |dua| stands for ``don't use acronyms''.
-%    It leads to a redefinition of \cmd{\ac} and
-%    \cmd{\acp}, making the full name appear all the time
+%    It leads to a redefinition of \cmd{\ac}, \cmd{\Ac}, \cmd{\acp},
+%    and \cmd{\Acp}, making the full name appear all the time
 %    and suppressing all acronyms but the explicity requested by
-%    \cmd{\acf} or \cmd{\acfp}.
+%    \cmd{\acf}, \cmd{\Acf}, \cmd{\acfp} or \cmd{\Acfp}.
 %    \begin{macrocode}
 \newif\ifAC@dua
 \AC@duafalse
@@ -713,6 +767,16 @@ blocks to be tested separately. The latter are commonly indicated as
 \newif\ifAC@nolist
 \AC@nolistfalse
 \DeclareOption{nolist}{\AC@nolisttrue\AC@nohyperlinkstrue}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\ifAC@nolinebreak}
+%    The option |nolinebreak| dictates whether to forbid, by defalt, a line break
+%    between the full name and the short name, when they are presented together.
+%    \begin{macrocode}
+\newif\ifAC@nolinebreak
+\AC@nolinebreakfalse
+\DeclareOption{nolinebreak}{\AC@nolinebreaktrue}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -750,6 +814,21 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \end{macro}
 %    \end{macro}
+%    \end{macro}
+%
+%    \begin{macro}{\AC@linebreakpenalty}
+%    When the option |nolinebreak| is specified, the default penalty for a line break
+%    is being set to the maximum. Otherwise, the default penalty is one level below
+%    the maximum, meaning that most of the times, by default, the line will not get
+%    broken.
+%    
+%    \begin{macrocode}
+\ifAC@nolinebreak
+  \def\AC@linebreakpenalty{4}
+\else
+  \def\AC@linebreakpenalty{3}
+\fi
+%    \end{macrocode}
 %    \end{macro}
 %
 %    \subsection{Hyperlinks and PDF support}
@@ -815,17 +894,27 @@ blocks to be tested separately. The latter are commonly indicated as
       }%
       \def\acs#1{\AChy@call{#1}\AC@acs}%
       \def\acl#1{\AChy@call{#1}\@acl}%
+      \def\Acl#1{\AChy@call{#1}\@Acl}%
       \def\acf#1{\AChy@call{#1}\AChy@acf}%
+      \def\Acf#1{\AChy@call{#1}\AChy@Acf}%
       \def\ac#1{\AChy@call{#1}\@ac}%
+      \def\Ac#1{\AChy@call{#1}\@Ac}%
       \def\acsp#1{\AChy@call{#1}\@acsp}%
       \def\aclp#1{\AChy@call{#1}\@aclp}%
+      \def\Aclp#1{\AChy@call{#1}\@Aclp}%
       \def\acfp#1{\AChy@call{#1}\AChy@acfp}%
+      \def\Acfp#1{\AChy@call{#1}\AChy@Acfp}%
       \def\acp#1{\AChy@call{#1}\@acp}%
+      \def\Acp#1{\AChy@call{#1}\@Acp}%
       \def\acfi#1{\AChy@call{#1}\AChy@acf}%
+      \def\Acfi#1{\AChy@call{#1}\AChy@Acf}%
       \let\acsu\acs
       \let\aclu\acl
+      \let\Aclu\Acl
       \def\AChy@acf#1{\AC@acl{#1} (\AC@acs{#1})}%
+      \def\AChy@Acf#1{\AC@Acl{#1} (\AC@acs{#1})}%
       \def\AChy@acfp#1{\AC@aclp{#1} (\AC@acsp{#1})}%
+      \def\AChy@Acfp#1{\AC@Aclp{#1} (\AC@acsp{#1})}%
    }%
 }
 %    \end{macrocode}
@@ -857,7 +946,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \begin{macro}{\acresetall}
 %    \begin{macro}{\AC@reset}
 %    This macro resets the |AC@FN| - tag of each acronym, therefore |\ac|
-%    will use FullName (FN) next time it is called
+%    will use Full Name (FN) next time it is called
 %    \begin{macrocode}
 \newcommand*\acresetall{\the\AC@clearlist\AC@clearlist={}}
 %    \end{macrocode}
@@ -927,6 +1016,17 @@ blocks to be tested separately. The latter are commonly indicated as
    \fi}
 %    \end{macrocode}
 %    \end{macro}
+%    \end{macro}
+%
+%    \begin{macro}{\@firstupper}
+%    Internal commands for making a first letter upper case.
+%    \begin{macrocode}
+\newcommand{\@firstupper}[1]{%
+    \StrLeft{#1}{1}[\firstletter]%
+    \StrGobbleLeft{#1}{1}[\remainder]%
+    \MakeUppercase\firstletter\remainder%
+}
+%    \end{macrocode}
 %    \end{macro}
 %
 %
@@ -1222,6 +1322,7 @@ blocks to be tested separately. The latter are commonly indicated as
 % 
 %
 %    \begin{macro}{\AC@aclp}
+%    \begin{macro}{\AC@Aclp}
 %    \begin{macro}{\AC@acsp}
 %    Deliver either standard or nonstandard plural form (long and short
 %    respectively).
@@ -1233,6 +1334,9 @@ blocks to be tested separately. The latter are commonly indicated as
   \AC@acl{#1}s%
   \fi
 }
+\newcommand*\AC@Aclp[1]{%
+  \@firstupper{\AC@aclp{#1}}%
+}
 \newcommand*\AC@acsp[1]{%
   \ifcsname fn@#1@PS\endcsname
   \csname fn@#1@PS\endcsname
@@ -1243,7 +1347,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \end{macro}
 %    \end{macro}
-
+%    \end{macro}
 %
 % \subsection{Using acronyms}
 %
@@ -1279,6 +1383,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %
 %    \begin{macro}{\AC@acs}
 %    \begin{macro}{\AC@acl}
+%    \begin{macro}{\AC@Acl}
 %    The internal commands \cmd{\AC@acs} and \cmd{\AC@acl} returns
 %    the (unformatted) short and the long forms of an acronym as
 %    saved in \fnacro. Mbox to prevent hyphenation of short form.
@@ -1290,6 +1395,12 @@ blocks to be tested separately. The latter are commonly indicated as
 \newcommand*\AC@acl[1]{%
    \expandafter\AC@get\csname fn@#1\endcsname\@secondoftwo{#1}}
 %    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*\AC@Acl[1]{%
+   \@firstupper{\AC@acl{#1}}%
+}
+%    \end{macrocode}
+%    \end{macro}
 %    \end{macro}
 %    \end{macro}
 %
@@ -1321,6 +1432,8 @@ blocks to be tested separately. The latter are commonly indicated as
 %
 %    \begin{macro}{\acl}
 %    \begin{macro}{\@acl}
+%    \begin{macro}{\Acl}
+%    \begin{macro}{\@Acl}
 %    The user macro \cmd{\acl} prints the full name of the
 %    acronym.
 %    \begin{macrocode}
@@ -1328,10 +1441,21 @@ blocks to be tested separately. The latter are commonly indicated as
 \WithSuffix\newcommand\acl*{\AC@starredtrue\protect\@acl}%
 %    \end{macrocode}
 %    \begin{macrocode}
+\newcommand*{\Acl}{\AC@starredfalse\protect\@Acl}%
+\WithSuffix\newcommand\Acl*{\AC@starredtrue\protect\@Acl}%
+%    \end{macrocode}
+%    \begin{macrocode}
 \newcommand*{\@acl}[1]{%
    \AC@acl{#1}%
    \ifAC@starred\else\AC@logged{#1}\fi}
 %    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*{\@Acl}[1]{%
+   \AC@Acl{#1}%
+   \ifAC@starred\else\AC@logged{#1}\fi}
+%    \end{macrocode}
+%    \end{macro}
+%    \end{macro}
 %    \end{macro}
 %    \end{macro}
 %
@@ -1427,6 +1551,9 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \begin{macro}{\acf}
 %    \begin{macro}{\acfa}
 %    \begin{macro}{\@acf}
+%    \begin{macro}{\Acf}
+%    \begin{macro}{\Acfa}
+%    \begin{macro}{\@Acf}
 %    The user macro \cmd{\acf} always prints the full name with
 %    the acronym. The format depends on \cmd{\acffont} and
 %    \cmd{\acfsfont}, and on the option |footnote| handled below.
@@ -1436,64 +1563,103 @@ blocks to be tested separately. The latter are commonly indicated as
 %
 %    The option |footnote| leads to a redefinition of \cmd{\acf},
 %    making the full name appear as a footnote. There is then
-%    no need for \cmd{\acffont} and \cmd{\acfsfont}.
+%    no need for \cmd{\acffont} and \cmd{\acfsfont}. If the option
+%    |footnote| is not specified, the optional variable determines
+%    the penalty for a line break.
 %    \begin{macrocode}
 \newcommand*{\acf}{\AC@starredfalse\protect\acfa}%
 \WithSuffix\newcommand\acf*{\AC@starredtrue\protect\acfa}%
 %    \end{macrocode}
 %    \begin{macrocode}
-\newcommand*{\acfa}[1]{%
-   \texorpdfstring{\protect\@acf{#1}}{\AC@acl{#1} (#1)}}
+\newcommand*{\Acf}{\AC@starredfalse\protect\Acfa}%
+\WithSuffix\newcommand\Acf*{\AC@starredtrue\protect\Acfa}%
 %    \end{macrocode}
 %    \begin{macrocode}
-\newcommand*{\@acf}[1]{%
+\newcommand*{\acfa}[2][\AC@linebreakpenalty]{%
+   \texorpdfstring{\protect\@acf[#1]{#2}}{\AC@acl{#2} (#2)}}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*{\Acfa}[2][\AC@linebreakpenalty]{%
+   \texorpdfstring{\protect\@Acf[#1]{#2}}{\AC@Acl{#2} (#2)}}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*{\@acf}[2][\AC@linebreakpenalty]{%
     \ifAC@footnote
-       \acsfont{\AC@acs{#1}}%
-       \footnote{\AC@placelabel{#1}\AC@acl{#1}{}}%
+       \acsfont{\AC@acs{#2}}%
+       \footnote{\AC@placelabel{#2}\AC@acl{#2}{}}%
     \else
        \acffont{%
-          \AC@placelabel{#1}\AC@acl{#1}%
-          \nolinebreak[3] %
-          \acfsfont{(\acsfont{\AC@acs{#1}})}%
+          \AC@placelabel{#2}\AC@acl{#2}%
+          \nolinebreak[#1] %
+          \acfsfont{(\acsfont{\AC@acs{#2}})}%
         }%
      \fi
-     \ifAC@starred\else\AC@logged{#1}\fi}
+     \ifAC@starred\else\AC@logged{#2}\fi}
 %    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*{\@Acf}[2][\AC@linebreakpenalty]{%
+    \ifAC@footnote
+       \acsfont{\AC@acs{#2}}%
+       \footnote{\AC@placelabel{#2}\AC@Acl{#2}{}}%
+    \else
+       \acffont{%
+          \AC@placelabel{#2}\AC@Acl{#2}%
+          \nolinebreak[#1] %
+          \acfsfont{(\acsfont{\AC@acs{#2}})}%
+        }%
+     \fi
+     \ifAC@starred\else\AC@logged{#2}\fi}
+%    \end{macrocode}
+%    \end{macro}
+%    \end{macro}
+%    \end{macro}
 %    \end{macro}
 %    \end{macro}
 %    \end{macro}
 %
 %    \begin{macro}{\ac}
+%    \begin{macro}{\@ac}
+%    \begin{macro}{\Ac}
+%    \begin{macro}{\@Ac}
 %    The first time an acronym is accessed its Full Name (FN) is
 %    printed. The next time just (FN). When the |footnote| option is
-%    used the short form (FN) is always used.
+%    used the short form (FN) is always used. The optional variable
+%    is being passed to \cmd{\acf}, in case it is used.
 %    \begin{macrocode}
 \newcommand*{\ac}{\AC@starredfalse\protect\@ac}%
 \WithSuffix\newcommand\ac*{\AC@starredtrue\protect\@ac}%
 %    \end{macrocode}
 %    \begin{macrocode}
-\newcommand{\@ac}[1]{%
+\newcommand*{\Ac}{\AC@starredfalse\protect\@Ac}%
+\WithSuffix\newcommand\Ac*{\AC@starredtrue\protect\@Ac}%
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand{\@ac}[2][\AC@linebreakpenalty]{%
   \ifAC@dua
-     \ifAC@starred\acl*{#1}\else\acl{#1}\fi%
+     \ifAC@starred\acl*{#2}\else\acl{#2}\fi%
   \else
-     \expandafter\ifx\csname AC@#1\endcsname\AC@used%
-     \ifAC@starred\acs*{#1}\else\acs{#1}\fi%
+     \expandafter\ifx\csname AC@#2\endcsname\AC@used%
+     \ifAC@starred\acs*{#2}\else\acs{#2}\fi%
    \else
-     \ifAC@starred\acf*{#1}\else\acf{#1}\fi%
+     \ifAC@starred\acf*[#1]{#2}\else\acf[#1]{#2}\fi%
+   \fi
+  \fi}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand{\@Ac}[2][\AC@linebreakpenalty]{%
+  \ifAC@dua
+     \ifAC@starred\Acl*{#2}\else\Acl{#2}\fi%
+  \else
+     \expandafter\ifx\csname AC@#2\endcsname\AC@used%
+     \ifAC@starred\acs*{#2}\else\acs{#2}\fi%
+   \else
+     \ifAC@starred\Acf*[#1]{#2}\else\Acf[#1]{#2}\fi%
    \fi
   \fi}
 %    \end{macrocode}
 %    \end{macro}
-%
-%    \begin{macro}{\@firstupper}
-%    Internal commands for Indefinite article
-%    \begin{macrocode}
-\newcommand{\@firstupper}[1]{%
-    \StrLeft{#1}{1}[\firstletter]%
-    \StrGobbleLeft{#1}{1}[\remainder]%
-    \MakeUppercase\firstletter\remainder
-}
-%    \end{macrocode}
+%    \end{macro}
+%    \end{macro}
 %    \end{macro}
 %
 %    \begin{macro}{\iac}
@@ -1501,7 +1667,8 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \begin{macro}{\@iaci}
 %    \begin{macro}{\Iac}
 %    \begin{macro}{\@Iac}
-%    Indefinite article correct expansion
+%    Indefinite article correct expansion. The optional variable
+%    is being passed to \cmd{\ac}.
 %    \begin{macrocode}
 \newcommand*{\iac}{\AC@starredfalse\protect\@iac}%
 \WithSuffix\newcommand\iac*{\AC@starredtrue\protect\@iac}%
@@ -1524,11 +1691,11 @@ blocks to be tested separately. The latter are commonly indicated as
    a%
    \fi
 }
-\newcommand*{\@iac}[1]{%
-   \@iaci{#1} \ifAC@starred\ac*{#1}\else\ac{#1}\fi%
+\newcommand*{\@iac}[2][\AC@linebreakpenalty]{%
+   \@iaci{#2} \ifAC@starred\ac*[#1]{#2}\else\ac[#1]{#2}\fi%
 }
-\newcommand*{\@Iac}[1]{%
-   \@firstupper{\@iaci{#1}} \ifAC@starred\ac*{#1}\else\ac{#1}\fi%
+\newcommand*{\@Iac}[2][\AC@linebreakpenalty]{%
+   \@firstupper{\@iaci{#2}} \ifAC@starred\ac*[#1]{#2}\else\ac[#1]{#2}\fi%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -1564,6 +1731,8 @@ blocks to be tested separately. The latter are commonly indicated as
 %
 %    \begin{macro}{\aclp}
 %    \begin{macro}{\@aclp}
+%    \begin{macro}{\Aclp}
+%    \begin{macro}{\@Aclp}
 %    The user macro \cmd{\aclp} prints the plural full name of the
 %    acronym.
 %    \begin{macrocode}
@@ -1571,85 +1740,159 @@ blocks to be tested separately. The latter are commonly indicated as
 \WithSuffix\newcommand\aclp*{\AC@starredtrue\protect\@aclp}%
 %    \end{macrocode}
 %    \begin{macrocode}
+\newcommand*{\Aclp}{\AC@starredfalse\protect\@Aclp}%
+\WithSuffix\newcommand\Aclp*{\AC@starredtrue\protect\@Aclp}%
+%    \end{macrocode}
+%    \begin{macrocode}
 \newcommand*{\@aclp}[1]{%
    \AC@aclp{#1}%
    \ifAC@starred\else\AC@logged{#1}\fi}
 %    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*{\@Aclp}[1]{%
+   \AC@Aclp{#1}%
+   \ifAC@starred\else\AC@logged{#1}\fi}
+%    \end{macrocode}
+%    \end{macro}
+%    \end{macro}
 %    \end{macro}
 %    \end{macro}
 %
 %    \begin{macro}{\acfp}
 %    \begin{macro}{\acfpa}
 %    \begin{macro}{\@acfp}
+%    \begin{macro}{\Acfp}
+%    \begin{macro}{\Acfpa}
+%    \begin{macro}{\@Acfp}
 %    The user macro \cmd{\acfp} always prints the plural full name with
 %    the plural of the acronym. The format depends on \cmd{\acffont} and
 %    \cmd{\acfsfont}, and on the option |footnote| handled below.
 %
-%    The option |footnote| leads to a redefinition of
-%    \cmd{\acfp}, making the full name appear as a footnote.
-%    There is then
-%    no need for \cmd{\acffont} and \cmd{\acfsfont}.
+%    The option |footnote| leads to a redefinition of \cmd{\acfp},
+%    making the full name appear as a footnote. There is then no need
+%    for \cmd{\acffont} and \cmd{\acfsfont}. If the option |footnote| is
+%    not specified, the optional variable determines the penalty for a
+%    line break.
 %    \begin{macrocode}
 \newcommand*{\acfp}{\AC@starredfalse\protect\acfpa}%
 \WithSuffix\newcommand\acfp*{\AC@starredtrue\protect\acfpa}%
 %    \end{macrocode}
 %    \begin{macrocode}
-\newcommand*{\acfpa}[1]{%
-   \texorpdfstring{\protect\@acfp{#1}}{\AC@aclp{#1} (\AC@acsp{#1})}}
+\newcommand*{\Acfp}{\AC@starredfalse\protect\Acfpa}%
+\WithSuffix\newcommand\Acfp*{\AC@starredtrue\protect\Acfpa}%
 %    \end{macrocode}
 %    \begin{macrocode}
-\newcommand*{\@acfp}[1]{%
+\newcommand*{\acfpa}[2][\AC@linebreakpenalty]{%
+   \texorpdfstring{\protect\@acfp[#1]{#2}}{\AC@aclp{#2} (\AC@acsp{#2})}}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*{\Acfpa}[2][\AC@linebreakpenalty]{%
+   \texorpdfstring{\protect\@Acfp[#1]{#2}}{\AC@Aclp{#2} (\AC@acsp{#2})}}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*{\@acfp}[2][\AC@linebreakpenalty]{%
    \ifAC@footnote
-      \acsfont{\AC@acsp{#1}}%
-      \footnote{\AC@placelabel{#1}\AC@aclp{#1}{}}%
+      \acsfont{\AC@acsp{#2}}%
+      \footnote{\AC@placelabel{#2}\AC@aclp{#2}{}}%
    \else
       \acffont{%
-         \AC@placelabel{#1}\AC@aclp{#1}%
-         \nolinebreak[3] %
-         \acfsfont{(\acsfont{\AC@acsp{#1}})}%
+         \AC@placelabel{#2}\AC@aclp{#2}%
+         \nolinebreak[#1] %
+         \acfsfont{(\acsfont{\AC@acsp{#2}})}%
          }%
    \fi
-   \ifAC@starred\else\AC@logged{#1}\fi}
+   \ifAC@starred\else\AC@logged{#2}\fi}
 %    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*{\@Acfp}[2][\AC@linebreakpenalty]{%
+   \ifAC@footnote
+      \acsfont{\AC@acsp{#2}}%
+      \footnote{\AC@placelabel{#2}\AC@Aclp{#2}{}}%
+   \else
+      \acffont{%
+         \AC@placelabel{#2}\AC@Aclp{#2}%
+         \nolinebreak[#1] %
+         \acfsfont{(\acsfont{\AC@acsp{#2}})}%
+         }%
+   \fi
+   \ifAC@starred\else\AC@logged{#2}\fi}
+%    \end{macrocode}
+%    \end{macro}
+%    \end{macro}
+%    \end{macro}
 %    \end{macro}
 %    \end{macro}
 %    \end{macro}
 %
 %    \begin{macro}{\acp}
 %    \begin{macro}{\@acp}
+%    \begin{macro}{\Acp}
+%    \begin{macro}{\@Acp}
 %    The first time an acronym is accessed Full Names (FNs) is
-%    printed. The next time just (FNs).
+%    printed. The next time just (FNs).The optional variable
+%    is being passed to \cmd{\acfp}, in case it is used.
 %    \begin{macrocode}
 \newcommand*{\acp}{\AC@starredfalse\protect\@acp}%
 \WithSuffix\newcommand\acp*{\AC@starredtrue\protect\@acp}%
 %    \end{macrocode}
 %    \begin{macrocode}
-\newcommand{\@acp}[1]{%
+\newcommand*{\Acp}{\AC@starredfalse\protect\@Acp}%
+\WithSuffix\newcommand\Acp*{\AC@starredtrue\protect\@Acp}%
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand{\@acp}[2][\AC@linebreakpenalty]{%
   \ifAC@dua
-     \ifAC@starred\aclp*{#1}\else\aclp{#1}\fi%
+     \ifAC@starred\aclp*{#2}\else\aclp{#2}\fi%
   \else
-   \expandafter\ifx\csname AC@#1\endcsname\AC@used
-      \ifAC@starred\acsp*{#1}\else\acsp{#1}\fi%
+   \expandafter\ifx\csname AC@#2\endcsname\AC@used
+      \ifAC@starred\acsp*{#2}\else\acsp{#2}\fi%
    \else
-      \ifAC@starred\acfp*{#1}\else\acfp{#1}\fi%
+      \ifAC@starred\acfp*[#1]{#2}\else\acfp[#1]{#2}\fi%
    \fi
   \fi}
 %    \end{macrocode}
+%    \begin{macrocode}
+\newcommand{\@Acp}[2][\AC@linebreakpenalty]{%
+  \ifAC@dua
+     \ifAC@starred\Aclp*{#2}\else\Aclp{#2}\fi%
+  \else
+   \expandafter\ifx\csname AC@#2\endcsname\AC@used
+      \ifAC@starred\acsp*{#2}\else\acsp{#2}\fi%
+   \else
+      \ifAC@starred\Acfp*[#1]{#2}\else\Acfp[#1]{#2}\fi%
+   \fi
+  \fi}
+%    \end{macrocode}
+%    \end{macro}
+%    \end{macro}
 %    \end{macro}
 %    \end{macro}
 %
 %
 %    \begin{macro}{\acfi}
 %    \begin{macro}{\acfia}
+%    \begin{macro}{\Acfi}
+%    \begin{macro}{\Acfia}
 %    The Full Name is printed in italics and the abbreviated is printed in upshape.
+%    The optional variable determines the penalty for a line break.
 %    \begin{macrocode}
 \newcommand*{\acfi}{\AC@starredfalse\protect\acfia}%
 \WithSuffix\newcommand\acfi*{\AC@starredtrue\protect\acfia}%
 %    \end{macrocode}
 %    \begin{macrocode}
-\newcommand{\acfia}[1]{%
-  {\itshape \AC@acl{#1}}\nolinebreak[3] (\ifAC@starred\acs*{#1}\else\acsu{#1}\fi)}
+\newcommand*{\Acfi}{\AC@starredfalse\protect\Acfia}%
+\WithSuffix\newcommand\Acfi*{\AC@starredtrue\protect\Acfia}%
 %    \end{macrocode}
+%    \begin{macrocode}
+\newcommand{\acfia}[2][\AC@linebreakpenalty]{%
+  {\itshape \AC@acl{#2}}\nolinebreak[#1] (\ifAC@starred\acs*{#2}\else\acsu{#2}\fi)}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand{\Acfia}[2][\AC@linebreakpenalty]{%
+  {\itshape \AC@Acl{#2}}\nolinebreak[#1] (\ifAC@starred\acs*{#2}\else\acsu{#2}\fi)}
+%    \end{macrocode}
+%    \end{macro}
+%    \end{macro}
 %    \end{macro}
 %    \end{macro}
 %
@@ -1679,15 +1922,27 @@ blocks to be tested separately. The latter are commonly indicated as
 %
 %    \begin{macro}{\aclu}
 %    \begin{macro}{\aclua}
+%    \begin{macro}{\Aclu}
+%    \begin{macro}{\Aclua}
 %    Print the long form of the acronym and mark it as used.
 %    \begin{macrocode}
 \newcommand*{\aclu}{\AC@starredfalse\protect\aclua}%
 \WithSuffix\newcommand\aclu*{\AC@starredtrue\protect\aclua}%
 %    \end{macrocode}
 %    \begin{macrocode}
+\newcommand*{\Aclu}{\AC@starredfalse\protect\Aclua}%
+\WithSuffix\newcommand\Aclu*{\AC@starredtrue\protect\Aclua}%
+%    \end{macrocode}
+%    \begin{macrocode}
 \newcommand{\aclua}[1]{%
    \ifAC@starred\acl*{#1}\else\acl{#1}\fi\acused{#1}}
 %    \end{macrocode}
+%    \begin{macrocode}
+\newcommand{\Aclua}[1]{%
+   \ifAC@starred\Acl*{#1}\else\Acl{#1}\fi\acused{#1}}
+%    \end{macrocode}
+%    \end{macro}
+%    \end{macro}
 %    \end{macro}
 %    \end{macro}
 %
