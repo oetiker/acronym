@@ -2,7 +2,7 @@
 %
 % Doc-Source file to use with LaTeX2e
 %
-% Copyright 1994-2015 by Tobias Oetiker (tobi@oetiker.ch) and many Contributors.
+% Copyright 1994-2019 by Tobias Oetiker (tobi@oetiker.ch) and many Contributors.
 % All rights reserved.
 %
 % This work may be distributed and/or modified under the conditions of
@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1062}
+% \CheckSum{1389}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -83,7 +83,7 @@
 % \DoNotIndex{\usepackage}
 %
 %
-%  \changes{v1.42}{2018/05/02}{Philippe Chauvat \cmd{hskip} Fix the carriage return with long lines (line 234/235)}
+%  \changes{v1.42}{2019/11/11}{Philippe Chauvat \cmd{hskip} Fix the carriage return with long lines, Tobi Oetiker and Horst Schirmeier fixed usedflag and page number entries for acfi and Acfi}
 %  \changes{v1.41}{2015/03/21}{Tobi Oetiker and Jason Mills \cmd{hskip} fix nameing conflicts with pageslts package}
 %  \changes{v1.40}{2014/09/29}{Hartmut Henkel - remove \cmd{hskip} instances, since they cause bad formating since space at the end of a line can not be collapsed anymore}
 %  \changes{v1.39}{2014/08/14}{Yann Leprince - make the appearance of labels consistent whether or not the acronym environment has its optional argument provided}
@@ -675,8 +675,8 @@ blocks to be tested separately. The latter are commonly indicated as
 %    First we test that we got the right format and name the package.
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesPackage{acronym}[2015/03/21
-                          v1.41
+\ProvidesPackage{acronym}[2019/11/11
+                          v1.42
                           Support for acronyms (Tobias Oetiker)]
 \RequirePackage{suffix,xstring}
 %    \end{macrocode}
@@ -1885,11 +1885,29 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand{\acfia}[2][\AC@linebreakpenalty]{%
-  {\itshape \AC@acl{#2}}\nolinebreak[#1] (\ifAC@starred\acs*{#2}\else\acsu{#2}\fi)}
+  \texorpdfstring{\protect\@acfi[#1]{#2}}{{\AC@acl{#2}} (#2)}}
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand{\Acfia}[2][\AC@linebreakpenalty]{%
-  {\itshape \AC@Acl{#2}}\nolinebreak[#1] (\ifAC@starred\acs*{#2}\else\acsu{#2}\fi)}
+   \texorpdfstring{\protect\@Acfi[#1]{#2}}{{\AC@Acl{#2}} (#2)}}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*{\@acfi}[2][\AC@linebreakpenalty]{%
+     \acffont{%
+         \AC@placelabel{#2}{\itshape\AC@acl{#2}}%
+         \nolinebreak[#1] %
+         \acfsfont{(\acsfont{\AC@acs{#2}})}%
+     }%
+     \ifAC@starred\else\AC@logged{#2}\fi}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*{\@Acfi}[2][\AC@linebreakpenalty]{%
+     \acffont{%
+         \AC@placelabel{#2}{\itshape\AC@Acl{#2}}%
+         \nolinebreak[#1] %
+         \acfsfont{(\acsfont{\AC@acs{#2}})}%
+     }%
+     \ifAC@starred\else\AC@logged{#2}\fi}
 %    \end{macrocode}
 %    \end{macro}
 %    \end{macro}

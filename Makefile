@@ -1,12 +1,12 @@
 SHELL = /bin/sh
-VERS = 1.41
+VERS = 1.42
 PACK=acronym
 
 tar:	tds
 	[ `grep $(VERS) acronym.dtx |wc -l` -ge 2 ] || false
 	ln -s . $(PACK)-$(VERS)
-	latex-2013 acronym.ins
-	pdflatex-2013 acronym.dtx
+	latex acronym.ins
+	pdflatex acronym.dtx
 	tar -zcvf $(PACK)-$(VERS).tar.gz `awk '{print "$(PACK)-$(VERS)/"$$1}' MANIFEST`
 	rm $(PACK)-$(VERS)
 

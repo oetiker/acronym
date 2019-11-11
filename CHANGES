@@ -1,3 +1,8 @@
+
+Version 1.42 (Nov 2019)
+
+fix the carriage return with long lines (line 234/235) -- Philippe Chauvat
+fix page number display for acfi Acfi -- Tobi Oetiker
 fix double space and missing used flag with acfi -- Horst Schirmeier
 
 Version 1.41 (Mar 2015)
@@ -23,7 +28,7 @@ add support for dynamic indefinite articles depending on the acronym form used
 -- Ash Hughes 
 
 fix for non hyphenation of first word in long form
--- Martin Rüßler
+-- Martin RÃ¼ÃŸler
 
 fix description of acrodefplural
 -- Joel Johnson
@@ -72,13 +77,13 @@ occurenace to list of acronyms.
 -- Tobias Oetiker (tobi with oetiker.ch)
 
 Version 1.26 (June 2006) supress lone item when nolist is in effect
--- Immo Köster <Immo.Koester there rwth-aachen.de>
+-- Immo KÃ¶ster <Immo.Koester there rwth-aachen.de>
 
 Version 1.25 (November 2005) properly handle acronyms in pdfbookmarks
 -- Heiko Oberdiek <oberdiek there uni-freiburg.de>
 
 Version 1.24 (October 2005) ac* commands are now not fragile anymore ... 
--- José Emilio Vila Forcén jose.vila there cui.unige.ch
+-- JosÃ© Emilio Vila ForcÃ©n jose.vila there cui.unige.ch
 
 Version 1.23 (October 2005) fixed typo in nolist option. added comment about fragility of ac commands.
 -- Tobias Oetiker (tobi with oetiker.ch)
@@ -93,7 +98,7 @@ Set acronyms as used in the first run, not only in the second one.
 -- Tobi Oetiker tobi at oetiker.ch
 
 added new option nolist to suppress printing the acronym list all together
--- José Emilio Vila Forcén jose.vila there cui.unige.ch
+-- JosÃ© Emilio Vila ForcÃ©n jose.vila there cui.unige.ch
 
 Version 1.20 (August 2005): make the acused command actually work
 -- Richard Walker Richard.Walker there cs.anu.edu.au
