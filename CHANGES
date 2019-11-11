@@ -2,8 +2,16 @@
 Version 1.42 (Nov 2019)
 
 fix the carriage return with long lines (line 234/235) -- Philippe Chauvat
+
 fix page number display for acfi Acfi -- Tobi Oetiker
+
 fix double space and missing used flag with acfi -- Horst Schirmeier
+
+two features were added -- Oz Davidi
+ * Now it is possible to forbid a line break between the full name and the short name (when they are printed together). It is possible to control it individually (for each command), and also globally (with the |nolinebreak| option).
+ * Added the \Ac{p,f,fp,l,lp,lu} commands. They work exactly the same way as the \ac commands, but prints the full name, starting with an upper case letter (in case it was defined with a lower case letter).
+
+correting issue with long lines due to carriage return misplaced -- Philippe Chauvat 
 
 Version 1.41 (Mar 2015)
 
