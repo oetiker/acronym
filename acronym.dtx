@@ -1186,7 +1186,8 @@ blocks to be tested separately. The latter are commonly indicated as
                  Acronym #1 used in text but not spelled out in
                  full in text}%
             \else%
-               \dotfill\pageref{acro:#1}%
+              \nobreak\leaders\hbox{$\m@th\mkern\@dotsep mu\hbox{.}\mkern\@dotsep mu$}\hfill%
+              \nobreak\hb@xt@\@pnumwidth{\hfil\normalfont\normalcolor\pageref*{acro:#1}}%
             \fi%
           \fi\\%
     \fi%
