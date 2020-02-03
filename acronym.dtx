@@ -1191,7 +1191,13 @@ blocks to be tested separately. The latter are commonly indicated as
                  full in text}%
             \else%
               \nobreak\leaders\hbox{$\m@th\mkern\@dotsep mu\hbox{.}\mkern\@dotsep mu$}\hfill%
-              \nobreak\hb@xt@\@pnumwidth{\hfil\normalfont\normalcolor\pageref*{acro:#1}}%
+              \nobreak\hb@xt@\@pnumwidth{\hfil\normalfont\normalcolor%
+                \ifAC@nohyperlinks%
+                  \pageref{acro:#1}%
+                \else%
+                  \pageref*{acro:#1}%
+                \fi%
+              }%
             \fi%
           \fi\\%
     \fi%
