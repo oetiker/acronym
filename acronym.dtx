@@ -736,6 +736,18 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{\ifAC@printonlyreused}
+%    With the |printonlyreused| option, only those acronyms are included in the
+%    list of acronyms that have been used more than once, i.e. at least twice.
+%    \begin{macrocode}
+\newif\ifAC@printonlyreused
+\AC@printonlyreusedfalse
+%    \end{macrocode}
+%    \begin{macrocode}
+\DeclareOption{printonlyreused}{\AC@printonlyreusedtrue}
+%    \end{macrocode}
+%    \end{macro}
+%
 %    \begin{macro}{\ifAC@withpage}
 %    A marker which tells us to print page numbers.
 %    \begin{macrocode}
