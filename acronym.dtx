@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1455}
+% \CheckSum{1459}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -83,6 +83,7 @@
 % \DoNotIndex{\usepackage}
 %
 %
+%  \changes{v1.43}{2020/02/05}{Marcus Meeßen \cmd{hskip} Fixed unconventional dots spacing in list of acronyms, enhanced list of acronyms with hyperrefs, and fixed collisions between acronyms and package commands, which can be turned of with the |noacroprefix| option}
 %  \changes{v1.42}{2019/11/11}{Philippe Chauvat \cmd{hskip} Fix the carriage return with long lines, Tobi Oetiker and Horst Schirmeier fixed usedflag and page number entries for acfi and Acfi}
 %  \changes{v1.41}{2015/03/21}{Tobi Oetiker and Jason Mills \cmd{hskip} fix nameing conflicts with pageslts package}
 %  \changes{v1.40}{2014/09/29}{Hartmut Henkel - remove \cmd{hskip} instances, since they cause bad formating since space at the end of a line can not be collapsed anymore}
@@ -675,8 +676,8 @@ blocks to be tested separately. The latter are commonly indicated as
 %    First we test that we got the right format and name the package.
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesPackage{acronym}[2019/11/11
-                          v1.42
+\ProvidesPackage{acronym}[2020/02/05
+                          v1.43
                           Support for acronyms (Tobias Oetiker)]
 \RequirePackage{suffix,xstring}
 %    \end{macrocode}

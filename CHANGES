@@ -1,4 +1,16 @@
 
+Version 1.43 (Feb 2020)
+
+fixed unconventional dots spacing in list of acronyms
+-- Marcus Meeßen
+
+enhanced list of acronyms with hyperrefs
+-- Marcus Meeßen
+
+fixed collisions between acronyms and package commands, can be turned of with
+the |noacroprefix| option
+-- Marcus Meeßen
+
 Version 1.42 (Nov 2019)
 
 fix the carriage return with long lines (line 234/235) -- Philippe Chauvat
