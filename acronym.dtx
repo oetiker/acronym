@@ -710,6 +710,17 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{\ifAC@acroacronyms}
+%    With the |acroacronyms| option the acronym commands are prefixed to
+%    prevent collisions with existing commands in this package.
+%    \begin{macrocode}
+\newif\ifAC@acroacronyms
+\AC@acroacronymsfalse
+%    \end{macrocode}
+%    \begin{macrocode}
+\DeclareOption{acroacronyms}{\AC@acroacronymstrue}
+%    \end{macrocode}
+%    \end{macro}
 %
 %    \begin{macro}{\ifAC@printonlyused}
 %    We need a marker
@@ -952,7 +963,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \def\AC@reset#1{%
-  \global\expandafter\let\csname AC@acronyms#1\endcsname\relax
+  \global\expandafter\let\csname AC@\AC@prefix#1\endcsname\relax
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -1029,6 +1040,18 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{AC@prefix}
+%    Returns the prefix used to build the defined acronym commands if the
+%    |acroacronyms| option is enabled. Otherwise the output is empty, so the
+%    old behaviour from version 1.42 is retained.
+%    \begin{macrocode}
+\ifAC@acroacronyms
+  \newcommand*\AC@prefix{acronyms@}
+\else
+  \newcommand*\AC@prefix{}
+\fi
+%    \end{macrocode}
+%    \end{macro}
 %
 % \subsection{Defining acronyms}
 %
@@ -1167,14 +1190,19 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{environment}
 %
 %    \begin{macro}{\AC@acro}
-%    \begin{macro}{\AC@acronyms@acro}
+%    \begin{macro}{\AC@@acro}
 %    \begin{macrocode}
 \newcommand*\AC@acro[1]{%
-  \@ifnextchar[{\AC@acronyms@acro{#1}}{\AC@acronyms@acro{#1}[#1]}}
+  \@ifnextchar[{%
+    \csname AC@\AC@prefix{}@acro\endcsname{#1}%
+  }{%
+    \csname AC@\AC@prefix{}@acro\endcsname{#1}[#1]%
+  }%
+}
 %    \end{macrocode}
 %    \begin{macrocode}
-\newcommand\AC@acronyms@acro{}
-\def\AC@acronyms@acro#1[#2]#3{%
+\expandafter\newcommand\csname AC@\AC@prefix{}@acro\endcsname{}
+\expandafter\def\csname AC@\AC@prefix{}@acro\endcsname#1[#2]#3{%
   \ifAC@nolist%
   \else%
   \ifAC@printonlyused%
@@ -1550,11 +1578,11 @@ blocks to be tested separately. The latter are commonly indicated as
   \fi
 }%
 \newcommand*\AC@placelabel[1]{%
-  \expandafter\ifx\csname AC@acronyms#1\endcsname\AC@used
+  \expandafter\ifx\csname AC@\AC@prefix#1\endcsname\AC@used
   \else
     {\AC@phantomsection\@verridelabel{acro:#1}}%
     \ifAC@starred\else%
-    \global\expandafter\let\csname AC@acronyms#1\endcsname\AC@used
+    \global\expandafter\let\csname AC@\AC@prefix#1\endcsname\AC@used
     \fi%
     \AC@addtoAC@clearlist{#1}%
   \fi
@@ -1653,7 +1681,7 @@ blocks to be tested separately. The latter are commonly indicated as
   \ifAC@dua
      \ifAC@starred\acl*{#2}\else\acl{#2}\fi%
   \else
-     \expandafter\ifx\csname AC@acronyms#2\endcsname\AC@used%
+     \expandafter\ifx\csname AC@\AC@prefix#2\endcsname\AC@used%
      \ifAC@starred\acs*{#2}\else\acs{#2}\fi%
    \else
      \ifAC@starred\acf*[#1]{#2}\else\acf[#1]{#2}\fi%
@@ -1665,7 +1693,7 @@ blocks to be tested separately. The latter are commonly indicated as
   \ifAC@dua
      \ifAC@starred\Acl*{#2}\else\Acl{#2}\fi%
   \else
-     \expandafter\ifx\csname AC@acronyms#2\endcsname\AC@used%
+     \expandafter\ifx\csname AC@\AC@prefix#2\endcsname\AC@used%
      \ifAC@starred\acs*{#2}\else\acs{#2}\fi%
    \else
      \ifAC@starred\Acf*[#1]{#2}\else\Acf[#1]{#2}\fi%
@@ -1696,7 +1724,7 @@ blocks to be tested separately. The latter are commonly indicated as
      \ifAC@dua
         \csname fn@#1@IL\endcsname%
      \else
-        \expandafter\ifx\csname AC@acronyms#1\endcsname\AC@used%
+        \expandafter\ifx\csname AC@\AC@prefix#1\endcsname\AC@used%
         \csname fn@#1@IS\endcsname%
       \else
         \csname fn@#1@IL\endcsname%
@@ -1859,7 +1887,7 @@ blocks to be tested separately. The latter are commonly indicated as
   \ifAC@dua
      \ifAC@starred\aclp*{#2}\else\aclp{#2}\fi%
   \else
-   \expandafter\ifx\csname AC@acronyms#2\endcsname\AC@used
+   \expandafter\ifx\csname AC@\AC@prefix#2\endcsname\AC@used
       \ifAC@starred\acsp*{#2}\else\acsp{#2}\fi%
    \else
       \ifAC@starred\acfp*[#1]{#2}\else\acfp[#1]{#2}\fi%
@@ -1871,7 +1899,7 @@ blocks to be tested separately. The latter are commonly indicated as
   \ifAC@dua
      \ifAC@starred\Aclp*{#2}\else\Aclp{#2}\fi%
   \else
-   \expandafter\ifx\csname AC@acronyms#2\endcsname\AC@used
+   \expandafter\ifx\csname AC@\AC@prefix#2\endcsname\AC@used
       \ifAC@starred\acsp*{#2}\else\acsp{#2}\fi%
    \else
       \ifAC@starred\Acfp*[#1]{#2}\else\Acfp[#1]{#2}\fi%
@@ -1934,7 +1962,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \cmd{\acronymused}!
 %    \begin{macrocode}
 \newcommand{\acused}[1]{%
-\global\expandafter\let\csname AC@acronyms#1\endcsname\AC@used%
+\global\expandafter\let\csname AC@\AC@prefix#1\endcsname\AC@used%
 \AC@addtoAC@clearlist{#1}}
 %    \end{macrocode}
 %    \end{macro}
