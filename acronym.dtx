@@ -1281,11 +1281,24 @@ blocks to be tested separately. The latter are commonly indicated as
     \item[\protect\AC@hypertarget{#1}{\AC@hyperref[acro:#1]{\aclabelfont{#2}\hfill}}]\AC@hyperref[acro:#1]{#3}%
   \fi%
   \fi%
- \begingroup
+  \begingroup
     \def\acroextra##1{}%
     \@bsphack
-    \protected@write\@auxout{}%
-       {\string\newacro{#1}[\string\AC@hyperlink{#1}{#2}]{#3}}%
+      \ifAC@printonlyreused%
+        \protected@write\@auxout{}{%
+          \string\newacro{#1}[%
+            \expandafter\ifx\csname acused@#1@twice\endcsname\AC@used%
+              \string\AC@hyperlink{#1}{#2}%
+            \else%
+              {#2}%
+            \fi%
+          ]{#3}%
+        }%
+      \else%
+        \protected@write\@auxout{}{%
+          \string\newacro{#1}[\string\AC@hyperlink{#1}{#2}]{#3}%
+        }%
+      \fi%
     \@esphack
   \endgroup
   \ignorespaces}
