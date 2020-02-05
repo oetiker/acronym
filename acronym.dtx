@@ -1058,10 +1058,15 @@ blocks to be tested separately. The latter are commonly indicated as
       \relax%
     \else%
       \global\expandafter\let\csname acused@#1@twice\endcsname\AC@used%
+      \global\let\AC@populated\AC@used%
     \fi%
   \else%
     \global\expandafter\let\csname acused@#1@once\endcsname\AC@used%
-    \global\let\AC@populated\AC@used%
+    \ifAC@printonlyreused%
+      \relax%
+    \else%
+      \global\let\AC@populated\AC@used%
+    \fi%
   \fi%
 }
 %    \end{macrocode}
