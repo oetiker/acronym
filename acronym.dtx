@@ -847,13 +847,16 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \subsection{Hyperlinks and PDF support}
 %
 %    \begin{macro}{\AC@hyperlink}
+%    \begin{macro}{\AC@hyperref}
 %    \begin{macro}{\AC@hypertarget}
 %    Define dummy hyperlink commands
 %    \begin{macrocode}
 \def\AC@hyperlink#1#2{#2}
+\def\AC@hyperref[#1]#2{#2}
 \def\AC@hypertarget#1#2{#2}
 \def\AC@phantomsection{}
 %    \end{macrocode}
+%    \end{macro}
 %    \end{macro}
 %    \end{macro}
 %    \begin{macro}{\AC@raisedhypertarget}
@@ -865,6 +868,7 @@ blocks to be tested separately. The latter are commonly indicated as
    \AtBeginDocument{%
       \@ifpackageloaded{hyperref}
          {\let\AC@hyperlink=\hyperlink
+          \let\AC@hyperref=\hyperref
           \newcommand*\AC@raisedhypertarget[2]{%
              \Hy@raisedlink{\hypertarget{#1}{}}#2}%
           \let\AC@hypertarget=\AC@raisedhypertarget
@@ -1212,7 +1216,7 @@ blocks to be tested separately. The latter are commonly indicated as
       \ifAC@nohyperlinks%
         \item[\protect\AC@hypertarget{#1}{\aclabelfont{#2}}] #3%
       \else%
-        \item[\protect\AC@hypertarget{#1}{\hyperref[acro:#1]{\aclabelfont{#2}\hfill}}]\hyperref[acro:#1]{#3}%
+        \item[\protect\AC@hypertarget{#1}{\AC@hyperref[acro:#1]{\aclabelfont{#2}\hfill}}]\AC@hyperref[acro:#1]{#3}%
       \fi%
           \ifAC@withpage%
             \expandafter\ifx\csname r@acro:#1\endcsname\relax%
@@ -1235,7 +1239,7 @@ blocks to be tested separately. The latter are commonly indicated as
     \ifAC@nohyperlinks%
       \item[\protect\AC@hypertarget{#1}{\aclabelfont{#2}}] #3%
     \else%
-      \item[\protect\AC@hypertarget{#1}{\hyperref[acro:#1]{\aclabelfont{#2}\hfill}}]\hyperref[acro:#1]{#3}%
+      \item[\protect\AC@hypertarget{#1}{\AC@hyperref[acro:#1]{\aclabelfont{#2}\hfill}}]\AC@hyperref[acro:#1]{#3}%
     \fi%
   \fi%
   \fi%
