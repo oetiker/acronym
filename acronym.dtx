@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1389}
+% \CheckSum{1459}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -83,6 +83,7 @@
 % \DoNotIndex{\usepackage}
 %
 %
+%  \changes{v1.43}{2020/02/05}{Marcus Meeßen \cmd{hskip} Fixed unconventional dots spacing in list of acronyms, enhanced list of acronyms with hyperrefs, and fixed collisions between acronyms and package commands, which can be turned of with the |noacroprefix| option}
 %  \changes{v1.42}{2019/11/11}{Philippe Chauvat \cmd{hskip} Fix the carriage return with long lines, Tobi Oetiker and Horst Schirmeier fixed usedflag and page number entries for acfi and Acfi}
 %  \changes{v1.41}{2015/03/21}{Tobi Oetiker and Jason Mills \cmd{hskip} fix nameing conflicts with pageslts package}
 %  \changes{v1.40}{2014/09/29}{Hartmut Henkel - remove \cmd{hskip} instances, since they cause bad formating since space at the end of a line can not be collapsed anymore}
@@ -675,8 +676,8 @@ blocks to be tested separately. The latter are commonly indicated as
 %    First we test that we got the right format and name the package.
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesPackage{acronym}[2019/11/11
-                          v1.42
+\ProvidesPackage{acronym}[2020/02/05
+                          v1.43
                           Support for acronyms (Tobias Oetiker)]
 \RequirePackage{suffix,xstring}
 %    \end{macrocode}
@@ -710,6 +711,18 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{\ifAC@noacroprefix}
+%    With the |noacroprefix| option the acronym commands are not prefixed. This
+%    reproduces the old behavior of version <1.43, but can cause collisions
+%    between user-defined acronyms and commands of this package.
+%    \begin{macrocode}
+\newif\ifAC@noacroprefix
+\AC@noacroprefixfalse
+%    \end{macrocode}
+%    \begin{macrocode}
+\DeclareOption{noacroprefix}{\AC@noacroprefixtrue}
+%    \end{macrocode}
+%    \end{macro}
 %
 %    \begin{macro}{\ifAC@printonlyused}
 %    We need a marker
@@ -952,7 +965,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \def\AC@reset#1{%
-  \global\expandafter\let\csname AC@#1\endcsname\relax
+  \global\expandafter\let\csname AC@\AC@prefix#1\endcsname\relax
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -1029,6 +1042,18 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{AC@prefix}
+%    Returns the prefix used to build the defined acronym commands as long as
+%    the |noacroprefix| option is disabled. Otherwise the output is empty, so
+%    the old behaviour from version <1.43 is reproduced.
+%    \begin{macrocode}
+\ifAC@noacroprefix
+  \newcommand*\AC@prefix{}
+\else
+  \newcommand*\AC@prefix{acronyms@}
+\fi
+%    \end{macrocode}
+%    \end{macro}
 %
 % \subsection{Defining acronyms}
 %
@@ -1170,11 +1195,16 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \begin{macro}{\AC@@acro}
 %    \begin{macrocode}
 \newcommand*\AC@acro[1]{%
-  \@ifnextchar[{\AC@@acro{#1}}{\AC@@acro{#1}[#1]}}
+  \@ifnextchar[{%
+    \csname AC@\AC@prefix{}@acro\endcsname{#1}%
+  }{%
+    \csname AC@\AC@prefix{}@acro\endcsname{#1}[#1]%
+  }%
+}
 %    \end{macrocode}
 %    \begin{macrocode}
-\newcommand\AC@@acro{}
-\def\AC@@acro#1[#2]#3{%
+\expandafter\newcommand\csname AC@\AC@prefix{}@acro\endcsname{}
+\expandafter\def\csname AC@\AC@prefix{}@acro\endcsname#1[#2]#3{%
   \ifAC@nolist%
   \else%
   \ifAC@printonlyused%
@@ -1550,11 +1580,11 @@ blocks to be tested separately. The latter are commonly indicated as
   \fi
 }%
 \newcommand*\AC@placelabel[1]{%
-  \expandafter\ifx\csname AC@#1\endcsname\AC@used
+  \expandafter\ifx\csname AC@\AC@prefix#1\endcsname\AC@used
   \else
     {\AC@phantomsection\@verridelabel{acro:#1}}%
     \ifAC@starred\else%
-    \global\expandafter\let\csname AC@#1\endcsname\AC@used
+    \global\expandafter\let\csname AC@\AC@prefix#1\endcsname\AC@used
     \fi%
     \AC@addtoAC@clearlist{#1}%
   \fi
@@ -1653,7 +1683,7 @@ blocks to be tested separately. The latter are commonly indicated as
   \ifAC@dua
      \ifAC@starred\acl*{#2}\else\acl{#2}\fi%
   \else
-     \expandafter\ifx\csname AC@#2\endcsname\AC@used%
+     \expandafter\ifx\csname AC@\AC@prefix#2\endcsname\AC@used%
      \ifAC@starred\acs*{#2}\else\acs{#2}\fi%
    \else
      \ifAC@starred\acf*[#1]{#2}\else\acf[#1]{#2}\fi%
@@ -1665,7 +1695,7 @@ blocks to be tested separately. The latter are commonly indicated as
   \ifAC@dua
      \ifAC@starred\Acl*{#2}\else\Acl{#2}\fi%
   \else
-     \expandafter\ifx\csname AC@#2\endcsname\AC@used%
+     \expandafter\ifx\csname AC@\AC@prefix#2\endcsname\AC@used%
      \ifAC@starred\acs*{#2}\else\acs{#2}\fi%
    \else
      \ifAC@starred\Acf*[#1]{#2}\else\Acf[#1]{#2}\fi%
@@ -1696,7 +1726,7 @@ blocks to be tested separately. The latter are commonly indicated as
      \ifAC@dua
         \csname fn@#1@IL\endcsname%
      \else
-        \expandafter\ifx\csname AC@#1\endcsname\AC@used%
+        \expandafter\ifx\csname AC@\AC@prefix#1\endcsname\AC@used%
         \csname fn@#1@IS\endcsname%
       \else
         \csname fn@#1@IL\endcsname%
@@ -1859,7 +1889,7 @@ blocks to be tested separately. The latter are commonly indicated as
   \ifAC@dua
      \ifAC@starred\aclp*{#2}\else\aclp{#2}\fi%
   \else
-   \expandafter\ifx\csname AC@#2\endcsname\AC@used
+   \expandafter\ifx\csname AC@\AC@prefix#2\endcsname\AC@used
       \ifAC@starred\acsp*{#2}\else\acsp{#2}\fi%
    \else
       \ifAC@starred\acfp*[#1]{#2}\else\acfp[#1]{#2}\fi%
@@ -1871,7 +1901,7 @@ blocks to be tested separately. The latter are commonly indicated as
   \ifAC@dua
      \ifAC@starred\Aclp*{#2}\else\Aclp{#2}\fi%
   \else
-   \expandafter\ifx\csname AC@#2\endcsname\AC@used
+   \expandafter\ifx\csname AC@\AC@prefix#2\endcsname\AC@used
       \ifAC@starred\acsp*{#2}\else\acsp{#2}\fi%
    \else
       \ifAC@starred\Acfp*[#1]{#2}\else\Acfp[#1]{#2}\fi%
@@ -1934,7 +1964,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \cmd{\acronymused}!
 %    \begin{macrocode}
 \newcommand{\acused}[1]{%
-\global\expandafter\let\csname AC@#1\endcsname\AC@used%
+\global\expandafter\let\csname AC@\AC@prefix#1\endcsname\AC@used%
 \AC@addtoAC@clearlist{#1}}
 %    \end{macrocode}
 %    \end{macro}
