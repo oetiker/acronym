@@ -710,15 +710,16 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\ifAC@acroacronyms}
-%    With the |acroacronyms| option the acronym commands are prefixed to
-%    prevent collisions with existing commands in this package.
+%    \begin{macro}{\ifAC@noacroprefix}
+%    With the |noacroprefix| option the acronym commands are not prefixed. This
+%    reproduces the old behavior of version <1.43, but can cause collisions
+%    between user-defined acronyms and commands of this package.
 %    \begin{macrocode}
-\newif\ifAC@acroacronyms
-\AC@acroacronymsfalse
+\newif\ifAC@noacroprefix
+\AC@noacroprefixfalse
 %    \end{macrocode}
 %    \begin{macrocode}
-\DeclareOption{acroacronyms}{\AC@acroacronymstrue}
+\DeclareOption{noacroprefix}{\AC@noacroprefixtrue}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -1041,14 +1042,14 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macro}
 %
 %    \begin{macro}{AC@prefix}
-%    Returns the prefix used to build the defined acronym commands if the
-%    |acroacronyms| option is enabled. Otherwise the output is empty, so the
-%    old behaviour from version 1.42 is retained.
+%    Returns the prefix used to build the defined acronym commands as long as
+%    the |noacroprefix| option is disabled. Otherwise the output is empty, so
+%    the old behaviour from version <1.43 is reproduced.
 %    \begin{macrocode}
-\ifAC@acroacronyms
-  \newcommand*\AC@prefix{acronyms@}
-\else
+\ifAC@noacroprefix
   \newcommand*\AC@prefix{}
+\else
+  \newcommand*\AC@prefix{acronyms@}
 \fi
 %    \end{macrocode}
 %    \end{macro}
