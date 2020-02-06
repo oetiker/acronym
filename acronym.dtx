@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1459}
+% \CheckSum{1454}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -849,23 +849,19 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \begin{macro}{\AC@hyperlink}
 %    \begin{macro}{\AC@hyperref}
 %    \begin{macro}{\AC@hypertarget}
+%    \begin{macro}{\AC@phantomsection}
 %    Define dummy hyperlink commands
 %    \begin{macrocode}
 \def\AC@hyperlink#1#2{#2}
 \def\AC@hyperref[#1]#2{#2}
 \def\AC@hypertarget#1#2{#2}
-\AtBeginDocument{
-  \@ifpackageloaded{hyperref}{%
-    \def\AC@pageref{\pageref*}%
-  }{%
-    \def\AC@pageref{\pageref}%
-  }
-}
 \def\AC@phantomsection{}
 %    \end{macrocode}
 %    \end{macro}
 %    \end{macro}
 %    \end{macro}
+%    \end{macro}
+%
 %    \begin{macro}{\AC@raisedhypertarget}
 %    Make sure that hyperlink processing gets enabled before we process
 %    the document if hyperref has been loaded in the mean time.
@@ -888,6 +884,19 @@ blocks to be tested separately. The latter are commonly indicated as
           }%
          }{}}%
 \fi
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\AC@pageref}
+%    Use |\pageref*| instead of |\pageref| when the |hyperref| package is used.
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \@ifpackageloaded{hyperref}{%
+    \let\AC@pageref=\@pagerefstar%
+  }{%
+    \let\AC@pageref=\pageref%
+  }%
+}
 %    \end{macrocode}
 %    \end{macro}
 %
