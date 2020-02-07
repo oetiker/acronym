@@ -1,4 +1,8 @@
 
+Version 1.44 (Feb 2020)
+
+- added the |printonlyreused| option, which allows to automatically exclude acronyms from the list of acronyms if they are used only once
+
 Version 1.43 (Feb 2020)
 
 fixed unconventional dots spacing in list of acronyms
