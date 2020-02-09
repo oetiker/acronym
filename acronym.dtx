@@ -2,7 +2,7 @@
 %
 % Doc-Source file to use with LaTeX2e
 %
-% Copyright 1994-2019 by Tobias Oetiker (tobi@oetiker.ch) and many Contributors.
+% Copyright 1994-2020 by Tobias Oetiker (tobi@oetiker.ch) and many Contributors.
 % All rights reserved.
 %
 % This work may be distributed and/or modified under the conditions of
@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1454}
+% \CheckSum{1516}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -82,7 +82,7 @@
 % \DoNotIndex{\textbf, \textsf, \textsmaller, \textsuperscript, \the}
 % \DoNotIndex{\usepackage}
 %
-%
+%  \changes{v1.44}{2020/02/07}{Marcus Meeßen \cmd{hskip} Added the |printonlyreused| option, which allows to automatically exclude acronyms from the list of acronyms if they are used only once}
 %  \changes{v1.43}{2020/02/05}{Marcus Meeßen \cmd{hskip} Fixed unconventional dots spacing in list of acronyms, enhanced list of acronyms with hyperrefs, and fixed collisions between acronyms and package commands, which can be turned of with the |noacroprefix| option}
 %  \changes{v1.42}{2019/11/11}{Philippe Chauvat \cmd{hskip} Fix the carriage return with long lines, Tobi Oetiker and Horst Schirmeier fixed usedflag and page number entries for acfi and Acfi}
 %  \changes{v1.41}{2015/03/21}{Tobi Oetiker and Jason Mills \cmd{hskip} fix nameing conflicts with pageslts package}
@@ -424,11 +424,12 @@
 %    In standard mode, the acronym-list will consist of all defined
 %    acronyms, regardless if the the acronym was used in the text
 %    before or not. This behavior can be changed by loading the
-%    package with the parameter \texttt{printonlyused}:
+%    package with the parameter \texttt{printonlyused} (used at least once) or
+%    \texttt{printonlyreused} (use more than once):
 %    \begin{quote}
 %    |\usepackage[printonlyused]{acronym}|
 %    \end{quote}
-%    In \texttt{printonlyused}-mode you can add to each acronym the
+%    In \texttt{printonly(re)used}-mode you can add to each acronym the
 %    the page number where it was first used by additionally specifying
 %    the option \texttt{withpage}.
 %    \begin{quote}
@@ -676,8 +677,8 @@ blocks to be tested separately. The latter are commonly indicated as
 %    First we test that we got the right format and name the package.
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesPackage{acronym}[2020/02/05
-                          v1.43
+\ProvidesPackage{acronym}[2020/02/07
+                          v1.44
                           Support for acronyms (Tobias Oetiker)]
 \RequirePackage{suffix,xstring}
 %    \end{macrocode}
@@ -733,6 +734,18 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \DeclareOption{printonlyused}{\AC@printonlyusedtrue}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\ifAC@printonlyreused}
+%    With the |printonlyreused| option, only those acronyms are included in the
+%    list of acronyms that have been used more than once, i.e. at least twice.
+%    \begin{macrocode}
+\newif\ifAC@printonlyreused
+\AC@printonlyreusedfalse
+%    \end{macrocode}
+%    \begin{macrocode}
+\DeclareOption{printonlyreused}{\AC@printonlyreusedtrue}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -1000,7 +1013,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %
 %    \begin{macro}{\AC@populated}
 %    An on/off flag to note if any acronyms were logged. This
-%    is needed for the first run with |printonlyused| option,
+%    is needed for the first run with |printonly(re)used| option,
 %    because the acronym list are then empty, resulting in a
 %    |"missing item"| error.
 %
@@ -1041,12 +1054,22 @@ blocks to be tested separately. The latter are commonly indicated as
 %    (called by the \texttt{aux} file).
 %    \begin{macrocode}
 \newcommand*{\acronymused}[1]{%
-   \expandafter\ifx\csname acused@#1\endcsname\AC@used
-      \relax
-   \else
-       \global\expandafter\let\csname acused@#1\endcsname\AC@used
-       \global\let\AC@populated\AC@used
-   \fi}
+  \expandafter\ifx\csname acused@#1@once\endcsname\AC@used%
+    \expandafter\ifx\csname acused@#1@twice\endcsname\AC@used%
+      \relax%
+    \else%
+      \global\expandafter\let\csname acused@#1@twice\endcsname\AC@used%
+      \global\let\AC@populated\AC@used%
+    \fi%
+  \else%
+    \global\expandafter\let\csname acused@#1@once\endcsname\AC@used%
+    \ifAC@printonlyreused%
+      \relax%
+    \else%
+      \global\let\AC@populated\AC@used%
+    \fi%
+  \fi%
+}
 %    \end{macrocode}
 %    \end{macro}
 %    \end{macro}
@@ -1227,9 +1250,21 @@ blocks to be tested separately. The latter are commonly indicated as
 \expandafter\def\csname AC@\AC@prefix{}@acro\endcsname#1[#2]#3{%
   \ifAC@nolist%
   \else%
-  \ifAC@printonlyused%
-    \expandafter\ifx\csname acused@#1\endcsname\AC@used%
-      \item[\protect\AC@hypertarget{#1}{\AC@hyperref[acro:#1]{\aclabelfont{#2}\hfill}}]\AC@hyperref[acro:#1]{#3}%
+  \ifnum%
+    \ifAC@printonlyused 1%
+    \else\ifAC@printonlyreused 1%
+    \else 0\fi\fi%
+  =1%
+    \ifnum%
+      \ifAC@printonlyused%
+        \expandafter\ifx\csname acused@#1@once\endcsname\AC@used 1 \else 0 \fi%
+      \else\ifAC@printonlyreused%
+        \expandafter\ifx\csname acused@#1@twice\endcsname\AC@used 1 \else 0 \fi%
+      \else 0 \fi\fi%
+    =1%
+      \item[\protect\AC@hypertarget{#1}{%
+        \AC@hyperref[acro:#1]{\aclabelfont{#2}\hfill}%
+      }]\AC@hyperref[acro:#1]{#3}%
           \ifAC@withpage%
             \expandafter\ifx\csname r@acro:#1\endcsname\relax%
                \PackageInfo{acronym}{%
@@ -1247,11 +1282,24 @@ blocks to be tested separately. The latter are commonly indicated as
     \item[\protect\AC@hypertarget{#1}{\AC@hyperref[acro:#1]{\aclabelfont{#2}\hfill}}]\AC@hyperref[acro:#1]{#3}%
   \fi%
   \fi%
- \begingroup
+  \begingroup
     \def\acroextra##1{}%
     \@bsphack
-    \protected@write\@auxout{}%
-       {\string\newacro{#1}[\string\AC@hyperlink{#1}{#2}]{#3}}%
+      \ifAC@printonlyreused%
+        \protected@write\@auxout{}{%
+          \string\newacro{#1}[%
+            \expandafter\ifx\csname acused@#1@twice\endcsname\AC@used%
+              \string\AC@hyperlink{#1}{#2}%
+            \else%
+              {#2}%
+            \fi%
+          ]{#3}%
+        }%
+      \else%
+        \protected@write\@auxout{}{%
+          \string\newacro{#1}[\string\AC@hyperlink{#1}{#2}]{#3}%
+        }%
+      \fi%
     \@esphack
   \endgroup
   \ignorespaces}
