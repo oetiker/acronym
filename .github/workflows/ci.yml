@@ -28,7 +28,3 @@ jobs:
         uses: xu-cheng/latex-action@master
         with:
           root_file: acronym.dtx
-      - name: Documentation
-        uses: xu-cheng/latex-action@master
-        with:
-          root_file: acronym.dtx
