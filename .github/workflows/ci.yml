@@ -17,14 +17,14 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
       - name: Install
-        uses: xu-cheng/latex-action@master
+        uses: dante-ev/latex-action@master
         with:
           root_file: acronym.ins
       - name: Example Document
-        uses: xu-cheng/latex-action@master
+        uses: dante-ev/latex-action@master
         with:
           root_file: acrotest.tex
       - name: Documentation
-        uses: xu-cheng/latex-action@master
+        uses: dante-ev/latex-action@master
         with:
           root_file: acronym.dtx

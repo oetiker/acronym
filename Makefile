@@ -2,7 +2,7 @@ SHELL = /bin/sh
 VERS = 1.44
 PACK=acronym
 
-tar:	tds
+tar:
 	[ `grep $(VERS) acronym.dtx |wc -l` -ge 2 ] || false
 	ln -s . $(PACK)-$(VERS)
 	latex acronym.ins
