@@ -21,6 +21,8 @@ jobs:
         with:
           compiler: pdflatex
           root_file: acronym.ins
+      - name: Validate
+        run: ls -l 
       - name: Example Document
         uses: dante-ev/latex-action@master
         with:
