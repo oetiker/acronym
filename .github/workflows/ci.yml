@@ -19,6 +19,7 @@ jobs:
       - name: Install
         uses: dante-ev/latex-action@master
         with:
+          compiler: pdflatex
           root_file: acronym.ins
       - name: Example Document
         uses: dante-ev/latex-action@master
