@@ -1254,14 +1254,14 @@ blocks to be tested separately. The latter are commonly indicated as
     \ifAC@printonlyused 1%
     \else\ifAC@printonlyreused 1%
     \else 0\fi\fi%
-  =1%
+  =1\relax%
     \ifnum%
       \ifAC@printonlyused%
         \expandafter\ifx\csname acused@#1@once\endcsname\AC@used 1 \else 0 \fi%
       \else\ifAC@printonlyreused%
         \expandafter\ifx\csname acused@#1@twice\endcsname\AC@used 1 \else 0 \fi%
       \else 0 \fi\fi%
-    =1%
+    =1\relax%
       \item[\protect\AC@hypertarget{#1}{%
         \AC@hyperref[acro:#1]{\aclabelfont{#2}\hfill}%
       }]\AC@hyperref[acro:#1]{#3}%
