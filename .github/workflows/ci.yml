@@ -32,7 +32,3 @@ jobs:
         uses: xu-cheng/latex-action@master
         with:
           root_file: acronym.dtx
-          
-          acronym.ins
-          
-          main.tex
