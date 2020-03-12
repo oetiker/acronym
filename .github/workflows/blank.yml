@@ -1,0 +1,38 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request 
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  Install Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+      - name: Install
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: acronym.ins
+      - name: Example Document
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: acrotest.tex
+      - name: Documentation
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: acronym.dtx
+      - name: Documentation
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: acronym.dtx
+          
+          acronym.ins
+          
+          main.tex
