@@ -1,7 +1,12 @@
+Version 1.45 (Mar 2020)
 
+-  Fixed hyperref and "missing aux" regressions
+-- Marcus Meeßen
+ 
 Version 1.44 (Feb 2020)
 
 - added the |printonlyreused| option, which allows to automatically exclude acronyms from the list of acronyms if they are used only once
+-- Marcus Meeßen
 
 Version 1.43 (Feb 2020)
 
