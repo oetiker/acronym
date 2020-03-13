@@ -21,3 +21,10 @@ Files of the `acronym' package:
   acronym.ins		Installation script generating the source and an example
   acronym.pdf		PDF Version of the Docs
   CHANGES               list of changes
+
+If you run into trouble or would like to contribute, please use
+
+https://github.com/oetiker/acronym/
+
+cheers
+tobi

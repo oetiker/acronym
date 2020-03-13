@@ -82,6 +82,8 @@
 % \DoNotIndex{\textbf, \textsf, \textsmaller, \textsuperscript, \the}
 % \DoNotIndex{\usepackage}
 %
+%  \changes{v1.46}{2020/03/13}{Tobi Oetiker \cmd{hskip} Fixed miss merge}
+%  \changes{v1.45}{2020/03/13}{Marcus Meeßen \cmd{hskip} Fixed hyperref and "missing aux" regressions.}
 %  \changes{v1.44}{2020/02/07}{Marcus Meeßen \cmd{hskip} Added the |printonlyreused| option, which allows to automatically exclude acronyms from the list of acronyms if they are used only once}
 %  \changes{v1.43}{2020/02/05}{Marcus Meeßen \cmd{hskip} Fixed unconventional dots spacing in list of acronyms, enhanced list of acronyms with hyperrefs, and fixed collisions between acronyms and package commands, which can be turned of with the |noacroprefix| option}
 %  \changes{v1.42}{2019/11/11}{Philippe Chauvat \cmd{hskip} Fix the carriage return with long lines, Tobi Oetiker and Horst Schirmeier fixed usedflag and page number entries for acfi and Acfi}
@@ -677,8 +679,8 @@ blocks to be tested separately. The latter are commonly indicated as
 %    First we test that we got the right format and name the package.
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesPackage{acronym}[2020/02/07
-                          v1.44
+\ProvidesPackage{acronym}[2020/03/13
+                          v1.46
                           Support for acronyms (Tobias Oetiker)]
 \RequirePackage{suffix,xstring}
 %    \end{macrocode}
