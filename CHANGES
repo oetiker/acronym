@@ -1,3 +1,7 @@
+Version 1.46 (Mar 2020)
+
+- Fix merge error
+
 Version 1.45 (Mar 2020)
 
 -  Fixed hyperref and "missing aux" regressions
