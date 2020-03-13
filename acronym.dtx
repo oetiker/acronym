@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1516}
+% \CheckSum{1522}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1436,7 +1436,7 @@ blocks to be tested separately. The latter are commonly indicated as
   \fi
 }
 \newcommand*\AC@Aclp[1]{%
-  \@firstupper{\AC@aclp{#1}}%
+  \@firstupper\expandafter{\AC@aclp{#1}}%
 }
 \newcommand*\AC@acsp[1]{%
   \ifcsname fn@#1@PS\endcsname
@@ -1498,7 +1498,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*\AC@Acl[1]{%
-   \@firstupper{\AC@acl{#1}}%
+   \@firstupper\expandafter{\AC@acl{#1}}%
 }
 %    \end{macrocode}
 %    \end{macro}
