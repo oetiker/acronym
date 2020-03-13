@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1522}
+% \CheckSum{1523}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -631,7 +631,7 @@ between the constant of Boltzmann and the \acl{NA}:
 
 \Acp{LFVP} are processes in which the lepton number of the initial
 and final states are different. An example for \iac{LFVP} is
-neutrinoless double beta decay.
+neutrinoless double beta decay. \Iac{IC} popped up unexpectedly.
 
 \subsection{Some testing fundamentals}
 When testing \acp{IC}, one typically wants to identify functional
@@ -655,6 +655,7 @@ blocks to be tested separately. The latter are commonly indicated as
  \acro{IC}{Integrated Circuit}%
  \acro{BUT}{Block Under Test}%
  \acrodefplural{BUT}{Blocks Under Test}%
+ \acroindefinite{IC}{an}{an}
 \end{acronym}
 
 \end{document}
@@ -1798,7 +1799,7 @@ blocks to be tested separately. The latter are commonly indicated as
    \@iaci{#2} \ifAC@starred\ac*[#1]{#2}\else\ac[#1]{#2}\fi%
 }
 \newcommand*{\@Iac}[2][\AC@linebreakpenalty]{%
-   \@firstupper{\@iaci{#2}} \ifAC@starred\ac*[#1]{#2}\else\ac[#1]{#2}\fi%
+   \@firstupper\expandafter{\@iaci{#2}} \ifAC@starred\ac*[#1]{#2}\else\ac[#1]{#2}\fi%
 }
 %    \end{macrocode}
 %    \end{macro}

@@ -1,10 +1,14 @@
+Version 1.47 (in progress)
+
+- Fix Iac command - tobi
+
 Version 1.46 (Mar 2020)
 
 - Fix merge error
 
 Version 1.45 (Mar 2020)
 
--  Fixed hyperref and "missing aux" regressions
+-  Fixed hyperref regression and the longstanding "missing aux" bug.
 -- Marcus Meeßen
  
 Version 1.44 (Feb 2020)

@@ -12,6 +12,7 @@ on:
 
 jobs:
   install:
+    name: Install Test
     runs-on: ubuntu-latest
     steps:
       - name: Set up Git repository
