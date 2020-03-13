@@ -27,12 +27,8 @@ jobs:
       - name: Example Document
         uses: dante-ev/latex-action@master
         with:
-          compiler: pdflatex
-          args:
           root_file: acrotest.tex
       - name: Documentation
         uses: dante-ev/latex-action@master
         with:
-          compiler: pdflatex
-          args:
           root_file: acronym.dtx
