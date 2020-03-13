@@ -1799,7 +1799,7 @@ blocks to be tested separately. The latter are commonly indicated as
    \@iaci{#2} \ifAC@starred\ac*[#1]{#2}\else\ac[#1]{#2}\fi%
 }
 \newcommand*{\@Iac}[2][\AC@linebreakpenalty]{%
-   \@firstupper\expanafter{\@iaci{#2}} \ifAC@starred\ac*[#1]{#2}\else\ac[#1]{#2}\fi%
+   \@firstupper\expandafter{\@iaci{#2}} \ifAC@starred\ac*[#1]{#2}\else\ac[#1]{#2}\fi%
 }
 %    \end{macrocode}
 %    \end{macro}
