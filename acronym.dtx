@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1523}
+% \CheckSum{1526}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1439,7 +1439,7 @@ blocks to be tested separately. The latter are commonly indicated as
   \fi
 }
 \newcommand*\AC@Aclp[1]{%
-  \@firstupper\expandafter{\AC@aclp{#1}}%
+  \expandafter\@firstupper\expandafter{\AC@aclp{#1}}%
 }
 \newcommand*\AC@acsp[1]{%
   \ifcsname fn@#1@PS\endcsname
@@ -1501,7 +1501,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*\AC@Acl[1]{%
-   \@firstupper\expandafter{\AC@acl{#1}}%
+   \expandafter\@firstupper\expandafter{\AC@acl{#1}}%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -1799,7 +1799,7 @@ blocks to be tested separately. The latter are commonly indicated as
    \@iaci{#2} \ifAC@starred\ac*[#1]{#2}\else\ac[#1]{#2}\fi%
 }
 \newcommand*{\@Iac}[2][\AC@linebreakpenalty]{%
-   \@firstupper\expandafter{\@iaci{#2}} \ifAC@starred\ac*[#1]{#2}\else\ac[#1]{#2}\fi%
+   \expandafter\@firstupper\expandafter{\@iaci{#2}} \ifAC@starred\ac*[#1]{#2}\else\ac[#1]{#2}\fi%
 }
 %    \end{macrocode}
 %    \end{macro}
