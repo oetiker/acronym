@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1526}
+% \CheckSum{1529}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1081,9 +1081,8 @@ blocks to be tested separately. The latter are commonly indicated as
 %    Internal commands for making a first letter upper case.
 %    \begin{macrocode}
 \newcommand{\@firstupper}[1]{%
-    \StrLeft{#1}{1}[\firstletter]%
-    \StrGobbleLeft{#1}{1}[\remainder]%
-    \MakeUppercase\firstletter\remainder%
+  \StrSplit{#1}{1}{\head}{\tail}%
+  \MakeUppercase\head\tail%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -1439,7 +1438,9 @@ blocks to be tested separately. The latter are commonly indicated as
   \fi
 }
 \newcommand*\AC@Aclp[1]{%
-  \expandafter\@firstupper\expandafter{\AC@aclp{#1}}%
+  \AC@uppertrue%
+  \AC@aclp{#1}%
+  \AC@upperfalse%
 }
 \newcommand*\AC@acsp[1]{%
   \ifcsname fn@#1@PS\endcsname
@@ -1466,6 +1467,13 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{\ifAC@upper}
+%    TODO
+%    \begin{macrocode}
+\newif\ifAC@upper
+%    \end{macrocode}
+%    \end{macro}
+%
 %    \begin{macro}{\AC@get}
 %    If the acronym is undefined, the internal macro \cmd{\AC@get}
 %    warns the user by printing the name in bold with an exclamation
@@ -1476,12 +1484,17 @@ blocks to be tested separately. The latter are commonly indicated as
 %    saved in \fnacro.
 %    \begin{macrocode}
 \newcommand*\AC@get[3]{%
-    \ifx#1\relax
-       \PackageWarning{acronym}{Acronym `#3' is not defined}%
-       \textbf{#3!}%
+  \ifx#1\relax
+    \PackageWarning{acronym}{Acronym `#3' is not defined}%
+    \textbf{#3!}%
+  \else
+    \ifAC@upper
+      \@firstupper{\expandafter#2#1}%
     \else
-       \expandafter#2#1%
-    \fi}
+      \expandafter#2#1%
+    \fi
+  \fi
+}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -1501,7 +1514,9 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*\AC@Acl[1]{%
-   \expandafter\@firstupper\expandafter{\AC@acl{#1}}%
+  \AC@uppertrue%
+  \AC@acl{#1}%
+  \AC@upperfalse%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -1799,7 +1814,8 @@ blocks to be tested separately. The latter are commonly indicated as
    \@iaci{#2} \ifAC@starred\ac*[#1]{#2}\else\ac[#1]{#2}\fi%
 }
 \newcommand*{\@Iac}[2][\AC@linebreakpenalty]{%
-   \expandafter\@firstupper\expandafter{\@iaci{#2}} \ifAC@starred\ac*[#1]{#2}\else\ac[#1]{#2}\fi%
+  \@firstupper{\@iaci{#2}}\space%
+  \ifAC@starred\ac*[#1]{#2}\else\ac[#1]{#2}\fi%
 }
 %    \end{macrocode}
 %    \end{macro}
