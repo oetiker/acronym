@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1529}
+% \CheckSum{1528}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1040,7 +1040,6 @@ blocks to be tested separately. The latter are commonly indicated as
 %    acronyms is in the front matter of the document.
 %    \begin{macrocode}
 \newcommand*{\AC@logged}[1]{%
-   \acronymused{#1}% mark it as used in the current run too
    \@bsphack
    \protected@write\@auxout{}{\string\acronymused{#1}}%
    \@esphack}
