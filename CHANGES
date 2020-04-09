@@ -1,6 +1,13 @@
-Version 1.47 (in progress)
+Version 1.47 (Apr 2020)
 
-- Fix Iac command - tobi
+- Fixed \Iac macro expansion bug
+-- Tobias Oetiker
+- Fixed regression in commands for capitalisation
+-- Marcus Meeßen
+- Fixed bug were output depends on the position of the list of acronyms
+-- Marcus Meeßen
+- Fixed \Iac hyperlink nesting
+-- Marcus Meeßen
 
 Version 1.46 (Mar 2020)
 

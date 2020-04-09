@@ -1,5 +1,5 @@
 SHELL = /bin/sh
-VERS = 1.46
+VERS = 1.47
 PACK=acronym
 
 tar:

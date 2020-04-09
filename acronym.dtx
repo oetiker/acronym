@@ -82,6 +82,7 @@
 % \DoNotIndex{\textbf, \textsf, \textsmaller, \textsuperscript, \the}
 % \DoNotIndex{\usepackage}
 %
+%  \changes{v1.47}{2020/04/10}{Tobi Oetiker and Marcus Meeßen \cmd{hskip} Fixed several bugs in macros that use capitalisation, a bug were the output depends on the position of the list of acronyms, and a bug were nested hyperlinks could cause errors.}
 %  \changes{v1.46}{2020/03/13}{Tobi Oetiker \cmd{hskip} Fixed miss merge}
 %  \changes{v1.45}{2020/03/13}{Marcus Meeßen \cmd{hskip} Fixed hyperref and "missing aux" regressions.}
 %  \changes{v1.44}{2020/02/07}{Marcus Meeßen \cmd{hskip} Added the |printonlyreused| option, which allows to automatically exclude acronyms from the list of acronyms if they are used only once}
@@ -1468,7 +1469,10 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macro}
 %
 %    \begin{macro}{\ifAC@upper}
-%    TODO
+%    If an acronym needs to be capitalized, this flag is used to indicate
+%    this at an appropriate point in the code. In that case, the firstupper
+%    command will be called at a time when the acronym is expandable, otherwise
+%    the xstring command will not work properly.
 %    \begin{macrocode}
 \newif\ifAC@upper
 %    \end{macrocode}
