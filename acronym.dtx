@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1528}
+% \CheckSum{1526}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -631,12 +631,13 @@ between the constant of Boltzmann and the \acl{NA}:
 
 \Acp{LFVP} are processes in which the lepton number of the initial
 and final states are different. An example for \iac{LFVP} is
-neutrinoless double beta decay. \Iac{IC} popped up unexpectedly.
+neutrinoless double beta decay.
 
 \subsection{Some testing fundamentals}
 When testing \acp{IC}, one typically wants to identify functional
 blocks to be tested separately. The latter are commonly indicated as
-\acp{BUT}. To test a \ac{BUT} requires defining a testing strategy\dots
+\acp{BUT}. To test a \ac{BUT} requires defining a testing strategy\dots{}
+\Iac{IC} popped up unexpectedly.
 
 \section{Acronyms}
 \begin{acronym}[TDMA]
@@ -1339,7 +1340,7 @@ blocks to be tested separately. The latter are commonly indicated as
 \newcommand\AC@acroindefinite[3]{
   \@bsphack
   \protected@write\@auxout{}%
-    {\string\newacroindefinite{#1}{\string\AC@hyperlink{#1}{#2}}{#3}}%
+    {\string\newacroindefinite{#1}{#2}{#3}}%
   \@esphack
 }
 %    \end{macrocode}
@@ -1795,19 +1796,19 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*{\@iaci}[1]{%
-   \ifcsname fn@#1@IL\endcsname
-     \ifAC@dua
-        \csname fn@#1@IL\endcsname%
-     \else
-        \expandafter\ifx\csname AC@\AC@prefix#1\endcsname\AC@used%
+  \ifcsname fn@#1@IL\endcsname
+    \ifAC@dua
+      \csname fn@#1@IL\endcsname%
+    \else
+      \expandafter\ifx\csname AC@\AC@prefix#1\endcsname\AC@used%
         \csname fn@#1@IS\endcsname%
       \else
         \csname fn@#1@IL\endcsname%
       \fi
-     \fi
-   \else
-   a%
-   \fi
+    \fi
+  \else
+    a%
+  \fi
 }
 \newcommand*{\@iac}[2][\AC@linebreakpenalty]{%
    \@iaci{#2} \ifAC@starred\ac*[#1]{#2}\else\ac[#1]{#2}\fi%
