@@ -16,11 +16,11 @@ Note that acronym requires the 'suffix' package. You can find it on
 CTAN:macros/latex/contrib/bigfoot/
 
 Files of the `acronym' package:
-  README		This file
-  acronym.dtx		Sourcecode, example file & documentation
-  acronym.ins		Installation script generating the source and an example
-  acronym.pdf		PDF Version of the Docs
-  CHANGES               list of changes
+  README         This file
+  acronym.dtx    Sourcecode, example file & documentation
+  acronym.ins    Installation script generating the source and an example
+  acronym.pdf    PDF Version of the Docs
+  CHANGES        list of changes
 
 If you run into trouble or would like to contribute, please use
 
