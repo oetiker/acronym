@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1526}
+% \CheckSum{1600}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -265,7 +265,7 @@
 %
 %    \DescribeMacro{\acsp}
 %    Works in the same way as \cmd{\acs}, but makes the short
-%    form into a plural. 
+%    form into a plural.
 %
 %    \DescribeMacro{\aclp}
 %    Works in the same way as \cmd{\acl}, but makes the long form
@@ -283,6 +283,14 @@
 %    \DescribeMacro{\Acfi}
 %    Works in the same way as \cmd{\acfi}, but starts the long form with an
 %    upper case letter.
+%
+%    \DescribeMacro{\acfip}
+%    Works in the same way as \cmd{\acfi}, but makes the short and long
+%    forms into plurals.
+%
+%    \DescribeMacro{\Acfip}
+%    Works in the same way as \cmd{\acfip}, but starts the long form with
+%    an upper case letter.
 %
 %    \DescribeMacro{\acused}
 %    Marks an acronym as used, as if it had been called with \cmd{\ac},
@@ -302,11 +310,11 @@
 %    Example: |\acl{lox}/\acl{lh2} (\acsu{lox}/\acsu{lh2})|
 %
 %    \DescribeMacro{\iac}
-%    Works in the same way as the \cmd{\ac} command but prefixes it with 
+%    Works in the same way as the \cmd{\ac} command but prefixes it with
 %    an appropriate indefinite article.
 %
 %    \DescribeMacro{\Iac}
-%    Works in the same way as the \cmd{\ac} command but prefixes it with 
+%    Works in the same way as the \cmd{\ac} command but prefixes it with
 %    an appropriate upper case indefinite article.
 %
 %    \DescribeMacro{\...*}
@@ -316,8 +324,9 @@
 %    not show up.\\
 %    \cmd{\ac*}, \cmd{\Ac*}, \cmd{\acs*}, \cmd{\acl*}, \cmd{\Acl*}, \cmd{\acf*},
 %    \cmd{\Acf*}, \cmd{\acp*}, \cmd{\Acp*}, \cmd{\acsp*}, \cmd{\aclp*}, \cmd{\Aclp*},
-%    \cmd{\acfp*}, \cmd{\Acfp*}, \cmd{\acfi*}, \cmd{\Acfi*}, \cmd{\acsu*},
-%    \cmd{\aclu*}, \cmd{\Aclu*}, \cmd{\iac*} and \cmd{\Iac*}.
+%    \cmd{\acfp*}, \cmd{\Acfp*}, \cmd{\acfi*}, \cmd{\Acfi*}, \cmd{\acfip*},
+%    \cmd{\Acfip*}, \cmd{\acsu*}, \cmd{\aclu*}, \cmd{\Aclu*}, \cmd{\iac*},
+%    and \cmd{\Iac*}.
 %
 % \subsection{Customization}
 %
@@ -451,7 +460,7 @@
 %    that the latter makes the acronym definition stored in the |.aux|
 %    file. Therefore, the acronym becomes available from start-up in
 %    the next run.
-%    
+%
 %    Note that all the acronym definitions made by \cmd{\acro} in the
 %    |acronym| environment are also similarly added to the |.aux|
 %    file.
@@ -459,8 +468,8 @@
 %    \subsubsection{Non standard indefinite articles}
 %
 %    Sometimes the indefinite article of an acronym differs between its
-%    short form and its long form, for example ``a Federal Bureau of 
-%    Investigation (FBI) agent'' and ``an FBI agent''. To deal with this, 
+%    short form and its long form, for example ``a Federal Bureau of
+%    Investigation (FBI) agent'' and ``an FBI agent''. To deal with this,
 %    the package provides the following three commands
 %    \DescribeMacro{\newacroindefinite}
 %    \DescribeMacro{\acrodefindefinite}
@@ -479,7 +488,7 @@
 %    the acronym definition in the |.aux| file, so that the acronym
 %    exception is available at the next run from start-up.
 %
-%    When using \cmd{\iac} and \cmd{\Iac} without first defining an 
+%    When using \cmd{\iac} and \cmd{\Iac} without first defining an
 %    article, the default article is ``a''.
 %
 %    \subsubsection{Non standard and foreign plural forms}
@@ -538,7 +547,7 @@
 %    exception is available at the next run from start-up. When the
 %    optional short form is not provided, the acronym name plus an `s'
 %    is used.
-% 
+%
 %    Plural exceptions are never reported in tables of acronyms.
 %
 %
@@ -852,7 +861,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    is being set to the maximum. Otherwise, the default penalty is one level below
 %    the maximum, meaning that most of the times, by default, the line will not get
 %    broken.
-%    
+%
 %    \begin{macrocode}
 \ifAC@nolinebreak
   \def\AC@linebreakpenalty{4}
@@ -959,6 +968,8 @@ blocks to be tested separately. The latter are commonly indicated as
       \def\Acp#1{\AChy@call{#1}\@Acp}%
       \def\acfi#1{\AChy@call{#1}\AChy@acf}%
       \def\Acfi#1{\AChy@call{#1}\AChy@Acf}%
+      \def\acfip#1{\AChy@call{#1}\AChy@acfp}%
+      \def\Acfip#1{\AChy@call{#1}\AChy@Acfp}%
       \let\acsu\acs
       \let\aclu\acl
       \let\Aclu\Acl
@@ -1390,7 +1401,7 @@ blocks to be tested separately. The latter are commonly indicated as
   \@bsphack
   \protected@write\@auxout{}{\string\newacroplural{#1}{#2}}%
   \@esphack
-}  
+}
 %    \end{macrocode}
 %    \end{macro}
 %    \end{macro}
@@ -1419,11 +1430,11 @@ blocks to be tested separately. The latter are commonly indicated as
     {\string\newacroplural{#1}[\string\AC@hyperlink{#1}{\AC@acs{#1}}]{#2}}%
   \@esphack
 }
-%    \end{macrocode}   
+%    \end{macrocode}
 %    \end{macro}
 %    \end{macro}
 %    \end{macro}
-% 
+%
 %
 %    \begin{macro}{\AC@aclp}
 %    \begin{macro}{\AC@Aclp}
@@ -2030,6 +2041,53 @@ blocks to be tested separately. The latter are commonly indicated as
          \AC@placelabel{#2}{\itshape\AC@Acl{#2}}%
          \nolinebreak[#1] %
          \acfsfont{(\acsfont{\AC@acs{#2}})}%
+     }%
+     \ifAC@starred\else\AC@logged{#2}\fi}
+%    \end{macrocode}
+%    \end{macro}
+%    \end{macro}
+%    \end{macro}
+%    \end{macro}
+%
+%
+%    \begin{macro}{\acfip}
+%    \begin{macro}{\acfipa}
+%    \begin{macro}{\Acfip}
+%    \begin{macro}{\Acfipa}
+%    The plural of the full name is printed in italics and the plural of
+%    the acronym is printed in upshape.
+%    The optional variable determines the penalty for a line break.
+%    \begin{macrocode}
+\newcommand*{\acfip}{\AC@starredfalse\protect\acfipa}%
+\WithSuffix\newcommand\acfip*{\AC@starredtrue\protect\acfipa}%
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*{\Acfip}{\AC@starredfalse\protect\Acfipa}%
+\WithSuffix\newcommand\Acfip*{\AC@starredtrue\protect\Acfipa}%
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand{\acfipa}[2][\AC@linebreakpenalty]{%
+  \texorpdfstring{\protect\@acfip[#1]{#2}}{{\AC@aclp{#2}} (#2)}}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand{\Acfipa}[2][\AC@linebreakpenalty]{%
+   \texorpdfstring{\protect\@Acfip[#1]{#2}}{{\AC@Aclp{#2}} (#2)}}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*{\@acfip}[2][\AC@linebreakpenalty]{%
+     \acffont{%
+         \AC@placelabel{#2}{\itshape\AC@aclp{#2}}%
+         \nolinebreak[#1] %
+         \acfsfont{(\acsfont{\AC@acsp{#2}})}%
+     }%
+     \ifAC@starred\else\AC@logged{#2}\fi}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*{\@Acfip}[2][\AC@linebreakpenalty]{%
+     \acffont{%
+         \AC@placelabel{#2}{\itshape\AC@Aclp{#2}}%
+         \nolinebreak[#1] %
+         \acfsfont{(\acsfont{\AC@acsp{#2}})}%
      }%
      \ifAC@starred\else\AC@logged{#2}\fi}
 %    \end{macrocode}
