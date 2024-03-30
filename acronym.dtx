@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1608}
+% \CheckSum{1616}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -716,7 +716,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macro}
 %
 %    \begin{macro}{\ifAC@nohyperlinks}
-%    If hyperref is loaded, all acronyms will link to their glossary entry.
+%    If hyperref is loaded, all acronyms will link to their glossary entry and the glossary entries to the first in-text use.
 %    With the option |nohyperlinks| these links can be suppressed.
 %    \begin{macrocode}
 \newif\ifAC@nohyperlinks
@@ -724,6 +724,18 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \DeclareOption{nohyperlinks}{\AC@nohyperlinkstrue}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\ifAC@noforwardlinks}
+%    If hyperref is loaded and the |nohyperlinks| option is not selected,
+%    the option |noforwardlinks| suppresses the links from the glossary entries to the in-text use.
+%    \begin{macrocode}
+\newif\ifAC@noforwardlinks
+\AC@noforwardlinksfalse
+%    \end{macrocode}
+%    \begin{macrocode}
+\DeclareOption{noforwardlinks}{\AC@noforwardlinkstrue}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -899,7 +911,7 @@ blocks to be tested separately. The latter are commonly indicated as
    \AtBeginDocument{%
       \@ifpackageloaded{hyperref}
          {\let\AC@hyperlink=\hyperlink
-          \let\AC@hyperref=\hyperref
+          \ifAC@noforwardlinks\else\let\AC@hyperref=\hyperref\fi
           \newcommand*\AC@raisedhypertarget[2]{%
              \Hy@raisedlink{\hypertarget{#1}{}}#2}%
           \let\AC@hypertarget=\AC@raisedhypertarget
