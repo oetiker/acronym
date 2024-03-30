@@ -2,7 +2,7 @@
 %
 % Doc-Source file to use with LaTeX2e
 %
-% Copyright 1994-2021 by Tobias Oetiker (tobi@oetiker.ch) and many Contributors.
+% Copyright 1994-2024 by Tobias Oetiker (tobi@oetiker.ch) and many Contributors.
 % All rights reserved.
 %
 % This work may be distributed and/or modified under the conditions of
@@ -82,6 +82,7 @@
 % \DoNotIndex{\textbf, \textsf, \textsmaller, \textsuperscript, \the}
 % \DoNotIndex{\usepackage}
 %
+%  \changes{v1.49}{2024/03/30}{Chris Landis adds noforwardlinks option and fixes targets for forward links to acs/acl/etc.-only use}
 %  \changes{v1.48}{2021/10/09}{Bruno Le Floch corrected capitalization of acronyms with a custom plural form.}
 %  \changes{v1.47}{2020/04/10}{Tobi Oetiker and Marcus Meeßen \cmd{hskip} Fixed several bugs in macros that use capitalisation, a bug were the output depends on the position of the list of acronyms, and a bug were nested hyperlinks could cause errors.}
 %  \changes{v1.46}{2020/03/13}{Tobi Oetiker \cmd{hskip} Fixed miss merge}
@@ -692,8 +693,8 @@ blocks to be tested separately. The latter are commonly indicated as
 %    First we test that we got the right format and name the package.
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesPackage{acronym}[2021/10/09
-                          v1.48
+\ProvidesPackage{acronym}[2024/03/30
+                          v1.49
                           Support for acronyms (Tobias Oetiker)]
 \RequirePackage{suffix,xstring}
 %    \end{macrocode}

@@ -1,3 +1,10 @@
+Version 1.48 (Mar 2024)
+
+- Adds noforwardlinks option
+-- Chris Landis
+- Fixes targets for forward links to acs/acl/etc.-only use
+-- Chris Landis
+
 Version 1.47 (Apr 2020)
 
 - Fixed \Iac macro expansion bug
