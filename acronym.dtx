@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1616}
+% \CheckSum{1634}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1569,7 +1569,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*{\@acs}[1]{%
-   \acsfont{\AC@acs{#1}}%
+   \acsfont{\AC@placelabel@part{#1}\AC@acs{#1}}%
 %% having a footnote on acs sort of defeats the purpose
 %%   \ifAC@footnote
 %%      \footnote{\AC@acl{#1}{}}%
@@ -1596,12 +1596,12 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*{\@acl}[1]{%
-   \AC@acl{#1}%
+   \AC@placelabel@part{#1}\AC@acl{#1}%
    \ifAC@starred\else\AC@logged{#1}\fi}
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*{\@Acl}[1]{%
-   \AC@Acl{#1}%
+   \AC@placelabel@part{#1}\AC@Acl{#1}%
    \ifAC@starred\else\AC@logged{#1}\fi}
 %    \end{macrocode}
 %    \end{macro}
@@ -1682,6 +1682,12 @@ blocks to be tested separately. The latter are commonly indicated as
   \ifx\@newl@bel\@testdef
     \let\@newl@bel\AC@testdef
     \let\AC@undonewlabel\@gobble
+  \fi
+}%
+\newcommand*\AC@placelabel@part[1]{%
+  \expandafter\ifx\csname AC@\AC@prefix#1\endcsname\AC@used
+  \else
+    {\AC@phantomsection\@verridelabel{acro:#1}}%
   \fi
 }%
 \newcommand*\AC@placelabel[1]{%
@@ -1873,7 +1879,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*{\@acsp}[1]{%
-   \acsfont{\AC@acsp{#1}}%
+   \acsfont{\AC@placelabel@part{#1}\AC@acsp{#1}}%
    \ifAC@starred\else\AC@logged{#1}\fi}
 %    \end{macrocode}
 %    \end{macro}
@@ -1896,12 +1902,12 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*{\@aclp}[1]{%
-   \AC@aclp{#1}%
+   \AC@placelabel@part{#1}\AC@aclp{#1}%
    \ifAC@starred\else\AC@logged{#1}\fi}
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*{\@Aclp}[1]{%
-   \AC@Aclp{#1}%
+   \AC@placelabel@part{#1}\AC@Aclp{#1}%
    \ifAC@starred\else\AC@logged{#1}\fi}
 %    \end{macrocode}
 %    \end{macro}
