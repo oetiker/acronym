@@ -2,7 +2,7 @@
 %
 % Doc-Source file to use with LaTeX2e
 %
-% Copyright 1994-2021 by Tobias Oetiker (tobi@oetiker.ch) and many Contributors.
+% Copyright 1994-2024 by Tobias Oetiker (tobi@oetiker.ch) and many Contributors.
 % All rights reserved.
 %
 % This work may be distributed and/or modified under the conditions of
@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1608}
+% \CheckSum{1634}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -82,6 +82,7 @@
 % \DoNotIndex{\textbf, \textsf, \textsmaller, \textsuperscript, \the}
 % \DoNotIndex{\usepackage}
 %
+%  \changes{v1.49}{2024/03/30}{Chris Landis adds noforwardlinks option and fixes targets for forward links to acs/acl/etc.-only use}
 %  \changes{v1.48}{2021/10/09}{Bruno Le Floch corrected capitalization of acronyms with a custom plural form.}
 %  \changes{v1.47}{2020/04/10}{Tobi Oetiker and Marcus Meeßen \cmd{hskip} Fixed several bugs in macros that use capitalisation, a bug were the output depends on the position of the list of acronyms, and a bug were nested hyperlinks could cause errors.}
 %  \changes{v1.46}{2020/03/13}{Tobi Oetiker \cmd{hskip} Fixed miss merge}
@@ -692,8 +693,8 @@ blocks to be tested separately. The latter are commonly indicated as
 %    First we test that we got the right format and name the package.
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesPackage{acronym}[2021/10/09
-                          v1.48
+\ProvidesPackage{acronym}[2024/03/30
+                          v1.49
                           Support for acronyms (Tobias Oetiker)]
 \RequirePackage{suffix,xstring}
 %    \end{macrocode}
@@ -716,7 +717,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macro}
 %
 %    \begin{macro}{\ifAC@nohyperlinks}
-%    If hyperref is loaded, all acronyms will link to their glossary entry.
+%    If hyperref is loaded, all acronyms will link to their glossary entry and the glossary entries to the first in-text use.
 %    With the option |nohyperlinks| these links can be suppressed.
 %    \begin{macrocode}
 \newif\ifAC@nohyperlinks
@@ -724,6 +725,18 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \DeclareOption{nohyperlinks}{\AC@nohyperlinkstrue}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\ifAC@noforwardlinks}
+%    If hyperref is loaded and the |nohyperlinks| option is not selected,
+%    the option |noforwardlinks| suppresses the links from the glossary entries to the in-text use.
+%    \begin{macrocode}
+\newif\ifAC@noforwardlinks
+\AC@noforwardlinksfalse
+%    \end{macrocode}
+%    \begin{macrocode}
+\DeclareOption{noforwardlinks}{\AC@noforwardlinkstrue}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -899,7 +912,7 @@ blocks to be tested separately. The latter are commonly indicated as
    \AtBeginDocument{%
       \@ifpackageloaded{hyperref}
          {\let\AC@hyperlink=\hyperlink
-          \let\AC@hyperref=\hyperref
+          \ifAC@noforwardlinks\else\let\AC@hyperref=\hyperref\fi
           \newcommand*\AC@raisedhypertarget[2]{%
              \Hy@raisedlink{\hypertarget{#1}{}}#2}%
           \let\AC@hypertarget=\AC@raisedhypertarget
@@ -1172,7 +1185,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %
 %
 %    \begin{environment}{AC@deflist}
-%    In standard mode, the acronym - list is formatted with a description
+%    In standard mode, the acronym list is formatted with a description
 %    environment. If an optional argument is passed to the acronym
 %    environment, the list is formatted as a AC@deflist, which needs the
 %    longest appearing acronym as parameter. If the option 'nolist' is selected
@@ -1217,7 +1230,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %
 %    \begin{macro}{\acro}
 %    Acronyms can be defined with the user command \cmd{\acro}
-%    in side the  |acronym| environment.
+%    inside the |acronym| environment.
 %
 %    \begin{macrocode}
 \newenvironment{acronym}[1][1]{%
@@ -1557,7 +1570,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*{\@acs}[1]{%
-   \acsfont{\AC@acs{#1}}%
+   \acsfont{\AC@placelabel@part{#1}\AC@acs{#1}}%
 %% having a footnote on acs sort of defeats the purpose
 %%   \ifAC@footnote
 %%      \footnote{\AC@acl{#1}{}}%
@@ -1584,12 +1597,12 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*{\@acl}[1]{%
-   \AC@acl{#1}%
+   \AC@placelabel@part{#1}\AC@acl{#1}%
    \ifAC@starred\else\AC@logged{#1}\fi}
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*{\@Acl}[1]{%
-   \AC@Acl{#1}%
+   \AC@placelabel@part{#1}\AC@Acl{#1}%
    \ifAC@starred\else\AC@logged{#1}\fi}
 %    \end{macrocode}
 %    \end{macro}
@@ -1670,6 +1683,12 @@ blocks to be tested separately. The latter are commonly indicated as
   \ifx\@newl@bel\@testdef
     \let\@newl@bel\AC@testdef
     \let\AC@undonewlabel\@gobble
+  \fi
+}%
+\newcommand*\AC@placelabel@part[1]{%
+  \expandafter\ifx\csname AC@\AC@prefix#1\endcsname\AC@used
+  \else
+    {\AC@phantomsection\@verridelabel{acro:#1}}%
   \fi
 }%
 \newcommand*\AC@placelabel[1]{%
@@ -1861,7 +1880,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*{\@acsp}[1]{%
-   \acsfont{\AC@acsp{#1}}%
+   \acsfont{\AC@placelabel@part{#1}\AC@acsp{#1}}%
    \ifAC@starred\else\AC@logged{#1}\fi}
 %    \end{macrocode}
 %    \end{macro}
@@ -1884,12 +1903,12 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*{\@aclp}[1]{%
-   \AC@aclp{#1}%
+   \AC@placelabel@part{#1}\AC@aclp{#1}%
    \ifAC@starred\else\AC@logged{#1}\fi}
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand*{\@Aclp}[1]{%
-   \AC@Aclp{#1}%
+   \AC@placelabel@part{#1}\AC@Aclp{#1}%
    \ifAC@starred\else\AC@logged{#1}\fi}
 %    \end{macrocode}
 %    \end{macro}
