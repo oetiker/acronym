@@ -603,6 +603,7 @@
 %<*acrotest>
 \documentclass{article}
 \usepackage[colorlinks]{hyperref}
+\usepackage{amsmath}
 \usepackage[printonlyused,withpage]{acronym}
 \begin{document}
 
@@ -637,7 +638,7 @@ ring, a pyridine derivate.
 One mol consists of \acs{NA} atoms or molecules. There is a relation
 between the constant of Boltzmann and the \acl{NA}:
 \begin{equation}
-  k = R/\acs{NA}
+  k = R/\acs{NA}\label{my:eq}
 \end{equation}
 
 \acl{lox}/\acl{lh2} (\acsu{lox}/\acsu{lh2})
@@ -646,7 +647,7 @@ between the constant of Boltzmann and the \acl{NA}:
 and final states are different. An example for \iac{LFVP} is
 neutrinoless double beta decay.
 
-\subsection{Some testing fundamentals}
+\subsection{Some testing \acp{IC} fundamentals}
 When testing \acp{IC}, one typically wants to identify functional
 blocks to be tested separately. The latter are commonly indicated as
 \acp{BUT}. To test a \ac{BUT} requires defining a testing strategy\dots{}
