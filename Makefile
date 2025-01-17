@@ -1,5 +1,5 @@
 SHELL = /bin/sh
-VERS = 1.47
+VERS = 1.50
 PACK=acronym
 
 tar:
@@ -21,7 +21,7 @@ tds:
 	rm -r doc source tex
 
 dist:   tar
-	gnome-open http://www.ctan.org/pkg/acronym
+	mate-open http://www.ctan.org/pkg/acronym
 	
 clean:
 	rm -rf texbuild pdfbuild

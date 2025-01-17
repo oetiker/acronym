@@ -1,13 +1,21 @@
-Version 1.49 (Sep 2024)
+Version 1.50 (Jan 2025)
 - Adds error option
 -- Theo von Arx
 
-Version 1.48 (Mar 2024)
+- Fixes label regression #60
+-- Tobi with lots of help
+
+Version 1.49 (Mar 2024)
 
 - Adds noforwardlinks option
 -- Chris Landis
 - Fixes targets for forward links to acs/acl/etc.-only use
 -- Chris Landis
+
+Version 1.48 (Oct 2021)
+
+- corrected capitalization of acronyms with a custom plural form
+-- Bruno Le Floch
 
 Version 1.47 (Apr 2020)
 
