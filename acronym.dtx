@@ -2,7 +2,7 @@
 %
 % Doc-Source file to use with LaTeX2e
 %
-% Copyright 1994-2024 by Tobias Oetiker (tobi@oetiker.ch) and many Contributors.
+% Copyright 1994-2025 by Tobias Oetiker (tobi@oetiker.ch) and many Contributors.
 % All rights reserved.
 %
 % This work may be distributed and/or modified under the conditions of
@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1634}
+% \CheckSum{1640}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -82,6 +82,7 @@
 % \DoNotIndex{\textbf, \textsf, \textsmaller, \textsuperscript, \the}
 % \DoNotIndex{\usepackage}
 %
+%  \changes{v1.50}{2025/01/16}{Fix for github issue\#60, issues with ltx and amsmath}
 %  \changes{v1.49}{2024/03/30}{Chris Landis adds noforwardlinks option and fixes targets for forward links to acs/acl/etc.-only use}
 %  \changes{v1.48}{2021/10/09}{Bruno Le Floch corrected capitalization of acronyms with a custom plural form.}
 %  \changes{v1.47}{2020/04/10}{Tobi Oetiker and Marcus Meeßen \cmd{hskip} Fixed several bugs in macros that use capitalisation, a bug were the output depends on the position of the list of acronyms, and a bug were nested hyperlinks could cause errors.}
@@ -602,6 +603,7 @@
 %<*acrotest>
 \documentclass{article}
 \usepackage[colorlinks]{hyperref}
+\usepackage{amsmath}
 \usepackage[printonlyused,withpage]{acronym}
 \begin{document}
 
@@ -636,7 +638,7 @@ ring, a pyridine derivate.
 One mol consists of \acs{NA} atoms or molecules. There is a relation
 between the constant of Boltzmann and the \acl{NA}:
 \begin{equation}
-  k = R/\acs{NA}
+  k = R/\acs{NA}\label{my:eq}
 \end{equation}
 
 \acl{lox}/\acl{lh2} (\acsu{lox}/\acsu{lh2})
@@ -645,7 +647,7 @@ between the constant of Boltzmann and the \acl{NA}:
 and final states are different. An example for \iac{LFVP} is
 neutrinoless double beta decay.
 
-\subsection{Some testing fundamentals}
+\subsection{Some testing \acp{IC} fundamentals}
 When testing \acp{IC}, one typically wants to identify functional
 blocks to be tested separately. The latter are commonly indicated as
 \acp{BUT}. To test a \ac{BUT} requires defining a testing strategy\dots{}
@@ -1612,17 +1614,21 @@ blocks to be tested separately. The latter are commonly indicated as
 %
 %    \subsection{Helper functions to unset labels}
 %
-%    \begin{macro}{\@verridelabel} The internal \cmd{\@verridelabel}
+%    \begin{macro}{\AC@verridelabel} The internal \cmd{\AC@verridelabel}
 %    command lets us 'redefine' an acronym label such that the page
 %    reference in the acronym list points where it should be pointing and
 %    not just to the very first occurrence of the acronym, where it may not
-%    even be expanded. (code by Ulrich Diez)
+%    even be expanded. (code by Ulrich Diez).
 %
 %    \begin{macrocode}
-\newcommand*\@verridelabel[1]{%
+\newcommand*\AC@verridelabel[1]{%
   \@bsphack
   \protected@write\@auxout{}{\string\AC@undonewlabel{#1}}%
-  \label{#1}%
+  \ifdefined\ltx@label%
+    \ltx@label{#1}%
+  \else%
+    \label{#1}%
+  \fi%
   \AC@overriddenmessage rs{#1}%
   \@esphack
 }%
@@ -1688,13 +1694,13 @@ blocks to be tested separately. The latter are commonly indicated as
 \newcommand*\AC@placelabel@part[1]{%
   \expandafter\ifx\csname AC@\AC@prefix#1\endcsname\AC@used
   \else
-    {\AC@phantomsection\@verridelabel{acro:#1}}%
+    \texorpdfstring{\AC@phantomsection\AC@verridelabel{acro:#1}}{}%
   \fi
 }%
 \newcommand*\AC@placelabel[1]{%
   \expandafter\ifx\csname AC@\AC@prefix#1\endcsname\AC@used
   \else
-    {\AC@phantomsection\@verridelabel{acro:#1}}%
+    {\AC@phantomsection\AC@verridelabel{acro:#1}}%
     \ifAC@starred\else%
     \global\expandafter\let\csname AC@\AC@prefix#1\endcsname\AC@used
     \fi%
