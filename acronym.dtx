@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1640}
+% \CheckSum{1664}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -73,7 +73,7 @@
 % \DoNotIndex{\makelabel, \mathrm}
 % \DoNotIndex{\NeedsTeXFormat, \newcommand, \newenvironment,
 %             \newif, \newtoks, \noexpand, \nolinebreak, \null}
-% \DoNotIndex{\PackageWarning, \ProcessOptions, \protect,
+% \DoNotIndex{\PackageWarning, \PackageError, \ProcessOptions, \protect,
 %             \protected@write, \providecommand, \ProvidesPackage}
 % \DoNotIndex{\raggedright, \ref, \relax, \renewcommand,
 %             \RequirePackage}
@@ -82,7 +82,7 @@
 % \DoNotIndex{\textbf, \textsf, \textsmaller, \textsuperscript, \the}
 % \DoNotIndex{\usepackage}
 %
-%  \changes{v1.50}{2025/01/16}{Fix for github issue\#60, issues with ltx and amsmath}
+%  \changes{v1.50}{2025/01/16}{Theo von Arx adds the option 'error' to throw errors upon undefined acronyms, Tobi integrates patches for issue/60 ltx and amsmath}
 %  \changes{v1.49}{2024/03/30}{Chris Landis adds noforwardlinks option and fixes targets for forward links to acs/acl/etc.-only use}
 %  \changes{v1.48}{2021/10/09}{Bruno Le Floch corrected capitalization of acronyms with a custom plural form.}
 %  \changes{v1.47}{2020/04/10}{Tobi Oetiker and Marcus Meeßen \cmd{hskip} Fixed several bugs in macros that use capitalisation, a bug were the output depends on the position of the list of acronyms, and a bug were nested hyperlinks could cause errors.}
@@ -695,8 +695,8 @@ blocks to be tested separately. The latter are commonly indicated as
 %    First we test that we got the right format and name the package.
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesPackage{acronym}[2024/03/30
-                          v1.49
+\ProvidesPackage{acronym}[2025/01/17
+                          v1.50
                           Support for acronyms (Tobias Oetiker)]
 \RequirePackage{suffix,xstring}
 %    \end{macrocode}
@@ -704,6 +704,17 @@ blocks to be tested separately. The latter are commonly indicated as
 %
 %
 % \subsection{Options}
+%
+%    \begin{macro}{\ifAC@error}
+%    The option |error| lets this package throw compile errors instead of warnings in case of undefined acronyms.
+%    \begin{macrocode}
+\newif\ifAC@error
+\AC@errorfalse
+%    \end{macrocode}
+%    \begin{macrocode}
+\DeclareOption{error}{\AC@errortrue}
+%    \end{macrocode}
+%    \end{macro}
 %
 %    \begin{macro}{\ifAC@footnote}
 %    The option |footnote| leads to a redefinition of \cmd{\acf},
@@ -1512,10 +1523,29 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\AC@get}
-%    If the acronym is undefined, the internal macro \cmd{\AC@get}
-%    warns the user by printing the name in bold with an exclamation
+%    \begin{macro}{\AC@logundefined}
+%    The internal macro \cmd{\AC@logundefined} either throws a warning or an error
+%    (if option |error| is set) and prints the name of the acronym in bold with an exclamation
 %    mark at the end.
+%    \begin{macrocode}
+\newcommand\AC@logundefined[1]{%
+  \ifAC@error%
+    \ifx\AC@populated\AC@used%
+      \PackageError{acronym}{#1}{You should define the acronym with
+        \protect\acrodef, \protect\newacro, or \protect\acro.}
+    \else%
+      \PackageWarning{acronym}{#1}%
+    \fi%
+  \else%
+    \PackageWarning{acronym}{#1}%
+  \fi%
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\AC@get}
+%    If the acronym is undefined, call the internal macro \cmd{\AC@undefined}
+%    for error handling.
 %    If defined, \cmd{\AC@get} uses the same mechanism used by the LaTeX
 %    kernel commands \cmd{\ref} and \cmd{\pageref} to return the short
 %    \cmd{\AC@acs} and long forms \cmd{\AC@acl} of the acronym
@@ -1523,7 +1553,7 @@ blocks to be tested separately. The latter are commonly indicated as
 %    \begin{macrocode}
 \newcommand*\AC@get[3]{%
   \ifx#1\relax
-    \PackageWarning{acronym}{Acronym `#3' is not defined}%
+    \AC@logundefined{Acronym #3 is not defined}%
     \textbf{#3!}%
   \else
     \@firstupper@maybe{\expandafter#2#1}%
