@@ -1,0 +1,25 @@
+% Compile three times; the last log must have no duplicate-label or rerun warnings.
+% Also test with \def\WithHyperref{} before \input.
+\documentclass{article}
+\ifdefined\WithHyperref\usepackage{hyperref}\fi
+\usepackage{cleveref}
+\usepackage{acronym}
+\newacro{ISO}{International Organization for Standardization}
+\begin{document}
+\makeatletter
+\ifx\@multiplelabels\relax\else
+  \errmessage{Duplicate acronym labels}%
+\fi
+\makeatother
+\section{Short form}
+Short: \acs{ISO}.
+\clearpage
+\section{Long form}
+Long: \acl{ISO}.
+\clearpage
+\section{First expansion}
+Full: \ac{ISO}.
+\clearpage
+\section{After reset}
+Reset: \acresetall\ac{ISO}.
+\end{document}

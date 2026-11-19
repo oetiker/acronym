@@ -35,7 +35,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1664}
+% \CheckSum{1670}
 %
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1649,10 +1649,15 @@ blocks to be tested separately. The latter are commonly indicated as
 %    reference in the acronym list points where it should be pointing and
 %    not just to the very first occurrence of the acronym, where it may not
 %    even be expanded. (code by Ulrich Diez).
+%    With cleveref, its companion label must be unset and tracked too.
 %
 %    \begin{macrocode}
 \newcommand*\AC@verridelabel[1]{%
   \@bsphack
+  \@ifpackageloaded{cleveref}{%
+    \protected@write\@auxout{}{\string\AC@undonewlabel{#1@cref}}%
+    \AC@overriddenmessage rs{#1@cref}%
+  }{}%
   \protected@write\@auxout{}{\string\AC@undonewlabel{#1}}%
   \ifdefined\ltx@label%
     \ltx@label{#1}%
